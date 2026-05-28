@@ -79,6 +79,8 @@ public class DatabaseDataInitializer implements ApplicationRunner {
                     "--schema=encuentra_formacion",
                     "-F", "c",
                     "--data-only",
+                    "--clean",
+                    "--disable-triggers",
                     "--no-owner", "--no-privileges",
                     containerPath);
         } finally {
