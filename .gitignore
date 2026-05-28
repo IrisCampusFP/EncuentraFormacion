@@ -1,0 +1,29 @@
+### CONSTRUCCION (Maven) ###
+target/
+*.jar
+*.war
+*.log
+
+### SISTEMA OPERATIVO ###
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+### IDEs ###
+
+### IntelliJ ###
+.idea/
+*.iml
+*.iws
+*.ipr
+
+### VS Code ###
+.vscode/
+
+### CONFIGURACION LOCAL ###
+.env
+*.local.properties
+logs/
+
+### MAVEN WRAPPER ###
+.mvn/wrapper/maven-wrapper.jar

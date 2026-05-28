@@ -1,0 +1,24 @@
+package com.irisperez.tfg.encuentraformacion.controller.publico;
+
+import com.irisperez.tfg.encuentraformacion.dto.catalogo.TipoEstudiosDTO;
+import com.irisperez.tfg.encuentraformacion.service.catalogo.TipoEstudiosService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/tipo-estudios")
+@RequiredArgsConstructor
+@PreAuthorize("permitAll()")
+public class TipoEstudiosController {
+
+    private final TipoEstudiosService tipoEstudiosService;
+
+    @GetMapping
+    public ResponseEntity<List<TipoEstudiosDTO>> listar() {
+        return ResponseEntity.ok(tipoEstudiosService.listar());
+    }
+}

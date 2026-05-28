@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contacto — EncuentraFormación</title>
+    <script src="/js/comun/theme.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" integrity="sha384-XGjxtQfXaH2tnPFa9x+ruJTuLE3Aa6LhHSWRr1XeTyhezb4abCG4ccI5AkVDxqC+" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <style>
+        .ef-contact-card {
+            border: 1px solid var(--ef-border);
+            border-radius: var(--ef-radius-lg);
+            background-color: var(--ef-surface);
+            box-shadow: var(--ef-shadow-sm);
+        }
+        .ef-contact-info-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--ef-border);
+        }
+        .ef-contact-info-item:last-child {
+            border-bottom: none;
+        }
+        .ef-contact-info-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: var(--ef-radius);
+            background-color: var(--ef-primary-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--ef-primary);
+            font-size: 1.1rem;
+        }
+        [data-bs-theme="dark"] .ef-contact-info-icon {
+            background-color: var(--ef-primary-subtle);
+        }
+        .ef-contact-info-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--ef-text-muted);
+            margin-bottom: 0.15rem;
+        }
+        .ef-contact-info-value {
+            font-size: 0.9375rem;
+            color: var(--ef-text-primary);
+            font-weight: 500;
+            margin: 0;
+        }
+        .ef-contact-info-value a {
+            color: var(--ef-primary);
+            text-decoration: none;
+        }
+        .ef-contact-info-value a:hover {
+            text-decoration: underline;
+        }
+        #alertaExito {
+            display: none;
+        }
+        .ef-notice {
+            background-color: var(--ef-primary-subtle);
+            border-left: 3px solid var(--ef-primary);
+            border-radius: 0 var(--ef-radius-sm) var(--ef-radius-sm) 0;
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            color: var(--ef-text-secondary);
+        }
+    </style>
+</head>
+
+<body class="ef-panel-body">
+
+    <div id="navbar-container"></div>
+
+    <header class="ef-hero">
+        <div class="container py-3">
+            <h1 class="ef-hero-title">Contacto</h1>
+            <p class="ef-hero-subtitle">¿Tienes alguna pregunta o incidencia? Escríbenos y te responderemos lo antes posible.</p>
+        </div>
+    </header>
+
+    <div class="container my-5" style="max-width: 860px;">
+
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Contacto</li>
+            </ol>
+        </nav>
+
+        <div class="row g-4 align-items-start">
+
+            <!-- Formulario -->
+            <div class="col-12 col-md-7">
+                <div class="ef-contact-card p-4 p-md-5">
+                    <h2 class="fw-bold mb-1" style="font-size: 1.25rem;">Envíanos un mensaje</h2>
+                    <p class="text-muted mb-4" style="font-size: 0.9rem;">Tu mensaje se abrirá en tu cliente de correo con el asunto y el contenido ya rellenados, listos para enviar.</p>
+
+                    <div id="alertaExito" class="alert alert-success d-flex align-items-center gap-2 mb-4" role="alert">
+                        <i class="bi bi-check-circle-fill flex-shrink-0"></i>
+                        <span>Se ha abierto Gmail en una nueva pestaña. Si se ha bloqueado la ventana emergente, escríbenos directamente a <a href="mailto:encuentraformacion@gmail.com" class="alert-link">encuentraformacion@gmail.com</a>.</span>
+                    </div>
+
+                    <form id="formContacto" novalidate>
+
+                        <div class="mb-3">
+                            <label for="asunto" class="form-label">Asunto <span class="text-danger">*</span></label>
+                            <select id="asunto" class="form-select" required>
+                                <option value="" disabled selected>Selecciona un asunto...</option>
+                                <option value="Consulta general">Consulta general</option>
+                                <option value="Incidencia técnica">Incidencia técnica</option>
+                                <option value="Solicitud sobre mis datos personales">Solicitud sobre mis datos personales</option>
+                                <option value="Información sobre centros">Información sobre centros</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                            <div class="invalid-feedback">Por favor, selecciona un asunto.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Tu nombre <span class="text-danger">*</span></label>
+                            <input type="text" id="nombre" class="form-control" placeholder="Nombre y apellidos" required maxlength="100">
+                            <div class="invalid-feedback">Por favor, indica tu nombre.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="emailRemitente" class="form-label">Tu correo electrónico <span class="text-danger">*</span></label>
+                            <input type="email" id="emailRemitente" class="form-control" placeholder="tu@correo.com" required maxlength="150">
+                            <div class="invalid-feedback">Por favor, introduce un correo electrónico válido.</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="mensaje" class="form-label">Mensaje <span class="text-danger">*</span></label>
+                            <textarea id="mensaje" class="form-control" rows="5" placeholder="Describe tu consulta con el mayor detalle posible..." required maxlength="2000"></textarea>
+                            <div class="d-flex align-items-start justify-content-between mt-1">
+                                <div class="invalid-feedback d-block" id="mensajeError" style="display:none!important;"></div>
+                                <span class="text-muted ms-auto flex-shrink-0" style="font-size:0.8rem; white-space:nowrap;"><span id="charCount">0</span> / 2000</span>
+                            </div>
+                        </div>
+
+                        <div class="ef-notice mb-4">
+                            <i class="bi bi-info-circle me-1"></i>
+                            Al pulsar <strong>Abrir Gmail</strong>, se abrirá Gmail en una nueva pestaña con el mensaje ya preparado. No almacenamos los datos de este formulario.
+                        </div>
+
+                        <a id="btnEnviar" href="https://mail.google.com/mail/?view=cm&fs=1&to=encuentraformacion%40gmail.com&su=%5BEncuentraFormaci%C3%B3n%5D%20Contacto" target="_blank" rel="noopener noreferrer"
+                           class="btn btn-primary w-100 fw-semibold py-2 text-decoration-none">
+                            <i class="bi bi-envelope-arrow-up me-2"></i>Abrir Gmail
+                        </a>
+
+                    </form>
+                </div>
+            </div>
+
+            <!-- Info lateral -->
+            <div class="col-12 col-md-5">
+                <div class="ef-contact-card p-4">
+                    <h3 class="fw-bold mb-3" style="font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ef-text-muted);">Información de contacto</h3>
+
+                    <div class="ef-contact-info-item">
+                        <div class="ef-contact-info-icon">
+                            <i class="bi bi-envelope-fill"></i>
+                        </div>
+                        <div>
+                            <p class="ef-contact-info-label">Correo electrónico</p>
+                            <p class="ef-contact-info-value">
+                                <a href="mailto:encuentraformacion@gmail.com">encuentraformacion@gmail.com</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="ef-contact-info-item">
+                        <div class="ef-contact-info-icon">
+                            <i class="bi bi-clock-fill"></i>
+                        </div>
+                        <div>
+                            <p class="ef-contact-info-label">Tiempo de respuesta</p>
+                            <p class="ef-contact-info-value">En la mayor brevedad posible</p>
+                        </div>
+                    </div>
+
+                    <div class="ef-contact-info-item">
+                        <div class="ef-contact-info-icon">
+                            <i class="bi bi-person-fill"></i>
+                        </div>
+                        <div>
+                            <p class="ef-contact-info-label">Responsable</p>
+                            <p class="ef-contact-info-value">Iris Pérez Aparicio</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Links legales -->
+                <div class="ef-contact-card p-4 mt-4">
+                    <h3 class="fw-bold mb-3" style="font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ef-text-muted);">Información legal</h3>
+                    <ul class="list-unstyled mb-0" style="font-size: 0.9rem;">
+                        <li class="mb-2">
+                            <a href="/vistas/publico/politica-privacidad.html" class="d-flex align-items-center gap-2 text-decoration-none">
+                                <i class="bi bi-shield-lock text-primary"></i>
+                                <span>Política de privacidad</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/vistas/publico/aviso-legal.html" class="d-flex align-items-center gap-2 text-decoration-none">
+                                <i class="bi bi-file-text text-primary"></i>
+                                <span>Aviso legal</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="footer-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="/js/comun/navbar.js"></script>
+    <script src="/js/comun/footer.js"></script>
+    <script>
+        const DESTINO = 'encuentraformacion@gmail.com';
+        const btnEnviar = document.getElementById('btnEnviar');
+
+        function construirUrl() {
+            const asunto  = document.getElementById('asunto').value  || '';
+            const nombre  = document.getElementById('nombre').value.trim() || '';
+            const email   = document.getElementById('emailRemitente').value.trim() || '';
+            const mensaje = document.getElementById('mensaje').value.trim() || '';
+
+            const asuntoCompleto = '[EncuentraFormación] ' + (asunto || 'Contacto');
+            const cuerpo = 'Nombre: ' + nombre
+                         + '\nCorreo de contacto: ' + email
+                         + '\n\n' + mensaje;
+
+            return 'https://mail.google.com/mail/?view=cm&fs=1'
+                 + '&to='   + encodeURIComponent(DESTINO)
+                 + '&su='   + encodeURIComponent(asuntoCompleto)
+                 + '&body=' + encodeURIComponent(cuerpo);
+        }
+
+        function actualizarEnlace() {
+            btnEnviar.href = construirUrl();
+        }
+
+        // Actualizar href en tiempo real conforme el usuario escribe
+        ['asunto', 'nombre', 'emailRemitente', 'mensaje'].forEach(id => {
+            document.getElementById(id).addEventListener('input', actualizarEnlace);
+            document.getElementById(id).addEventListener('change', actualizarEnlace);
+        });
+
+        document.getElementById('mensaje').addEventListener('input', function () {
+            document.getElementById('charCount').textContent = this.value.length;
+        });
+
+        btnEnviar.addEventListener('click', function (e) {
+            const asunto  = document.getElementById('asunto');
+            const nombre  = document.getElementById('nombre');
+            const email   = document.getElementById('emailRemitente');
+            const mensaje = document.getElementById('mensaje');
+            const mensajeError = document.getElementById('mensajeError');
+
+            [asunto, nombre, email, mensaje].forEach(el => el.classList.remove('is-invalid'));
+            mensajeError.style.display = 'none';
+
+            let valido = true;
+
+            if (!asunto.value) {
+                asunto.classList.add('is-invalid');
+                valido = false;
+            }
+            if (!nombre.value.trim()) {
+                nombre.classList.add('is-invalid');
+                valido = false;
+            }
+            if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+                email.classList.add('is-invalid');
+                valido = false;
+            }
+            if (!mensaje.value.trim()) {
+                mensaje.classList.add('is-invalid');
+                mensajeError.textContent = 'Por favor, escribe tu mensaje.';
+                mensajeError.style.display = 'block';
+                valido = false;
+            }
+
+            if (!valido) {
+                e.preventDefault();
+                return;
+            }
+
+            document.getElementById('alertaExito').style.display = 'flex';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+/* ==========================================================================
+   Design System: EncuentraFormación (Premium Edition)
+   Palette: Institutional Blue (#2563EB) & Action Indigo (#4F46E5)
+   ========================================================================== */
+
+:root,
+[data-bs-theme="light"] {
+
+  /* --- BRAND COLORS --- */
+  /* Blue: Trust, Official, Secure */
+  --ef-primary:        #2563EB; /* Blue 600 */
+  --ef-primary-hover:  #1D4ED8; /* Blue 700 */
+  --ef-primary-subtle: #EFF6FF; /* Blue 50 */
+  --ef-primary-light:  #DBEAFE; /* Blue 100 */
+  
+  /* Indigo: Action, Modernity, Accent */
+  --ef-accent:         #4F46E5; /* Indigo 600 */
+  --ef-accent-hover:   #4338CA; /* Indigo 700 */
+  --ef-accent-subtle:  #EEF2FF; /* Indigo 50 */
+
+  /* --- STATUS COLORS --- */
+  --ef-orange:         #F97316; /* Orange 500 */
+  --ef-success:        #10B981; /* Emerald 500 */
+  --ef-success-subtle: #D1FAE5; /* Emerald 100 */
+  --ef-warning:        #F59E0B; /* Amber 500 */
+  --ef-warning-subtle: #FEF3C7; /* Amber 100 */
+  --ef-danger:         #EF4444; /* Red 500 */
+  --ef-danger-subtle:  #FEE2E2; /* Red 100 */
+
+  /* --- NEUTRALS (BACKGROUNDS & SURFACES) --- */
+  /* Fondo Slate 100 da volumen y permite que las cards resalten */
+  --ef-bg:             #F1F5F9; /* Slate 100 */
+  --ef-surface:        #F8FAFC; /* Slate 50 (Off-white profesional que no deslumbra) */
+  --ef-surface-alt:    #E2E8F0; /* Slate 200 */
+  --ef-border:         rgba(15, 23, 42, 0.1); /* Sutil línea semi-transparente para fondos claros */
+  --ef-border-strong:  rgba(15, 23, 42, 0.2); 
+
+  /* --- TYPOGRAPHY --- */
+  --ef-text-primary:   #0F172A; /* Slate 900 */
+  --ef-text-secondary: #475569; /* Slate 600 */
+  --ef-text-muted:     #64748B; /* Slate 500 */
+  --ef-text-inverse:   #FFFFFF;
+
+  /* --- NAVBAR --- */
+  /* Navbar en Off-white limpio que no fatiga la vista */
+  --ef-navbar-bg:      #F8FAFC; 
+  --ef-navbar-text:    #0F172A; 
+  --ef-navbar-border:  #E2E8F0; 
+
+  /* --- SEMANTIC ACTIONS --- */
+  --ef-back:           #64748B; /* Slate 500 (Neutral) */
+  --ef-back-hover:     #475569; 
+  --ef-back-subtle:    #F8FAFC; 
+  
+  --ef-create:         #2563EB; /* Blue 600 */
+  --ef-create-hover:   #1D4ED8;
+  --ef-create-subtle:  #EFF6FF;
+  
+  --ef-edit:           #4F46E5; /* Indigo 600 */
+  --ef-edit-hover:     #4338CA; 
+  --ef-edit-subtle:    #EEF2FF; 
+
+  /* --- SHADOWS --- */
+  /* Sombras elegantes entintadas en Slate */
+  --ef-shadow-xs: 0 1px 2px 0 rgb(15 23 42 / 0.05);
+  --ef-shadow-sm: 0 1px 3px 0 rgb(15 23 42 / 0.06), 0 1px 2px -1px rgb(15 23 42 / 0.06);
+  --ef-shadow:    0 4px 6px -1px rgb(15 23 42 / 0.08), 0 2px 4px -2px rgb(15 23 42 / 0.08);
+  --ef-shadow-md: 0 10px 15px -3px rgb(15 23 42 / 0.08), 0 4px 6px -4px rgb(15 23 42 / 0.08);
+  --ef-shadow-lg: 0 20px 25px -5px rgb(15 23 42 / 0.08), 0 8px 10px -6px rgb(15 23 42 / 0.08);
+
+  /* --- RADII --- */
+  --ef-radius-xs: 0.25rem;
+  --ef-radius-sm: 0.375rem;
+  --ef-radius:    0.5rem;
+  --ef-radius-md: 0.75rem;
+  --ef-radius-lg: 1rem;
+  --ef-radius-xl: 1.25rem;
+
+  /* --- TRANSITIONS --- */
+  --ef-transition:    150ms ease;
+  --ef-transition-md: 250ms ease;
+
+  /* --- BOOTSTRAP OVERRIDES --- */
+  --bs-primary: #2563EB;
+  --bs-primary-rgb: 37, 99, 235;
+  --bs-link-color: #2563EB;
+  --bs-link-hover-color: #1D4ED8;
+  --bs-body-bg: #F1F5F9;
+  --bs-body-color: #0F172A;
+  --bs-border-color: var(--ef-border);
+  --bs-card-bg: var(--ef-surface);
+  --bs-card-border-color: var(--ef-border);
+}
+
+/* ==========================================================================
+   DARK MODE
+   Mapped logically for optical balance and contrast.
+   ========================================================================== */
+[data-bs-theme="dark"] {
+
+  /* --- BRAND COLORS --- */
+  --ef-primary:        #2563EB; /* Blue 600 (Oscurecido para mejor legibilidad con texto blanco) */
+  --ef-primary-hover:  #3B82F6; /* Blue 500 */
+  --ef-primary-subtle: #1E3A8A; /* Blue 900 */
+  --ef-primary-light:  #1E3A8A; /* Blue 900 (sustituye al Blue 100 en oscuro) */
+  
+  --ef-accent:         #6366F1; /* Indigo 500 */
+  --ef-accent-hover:   #818CF8; /* Indigo 400 */
+  --ef-accent-subtle:  #312E81; /* Indigo 900 */
+
+  /* --- STATUS COLORS --- */
+  --ef-success:        #16A34A; /* Green 600 */
+  --ef-success-subtle: #14532D; /* Green 900 */
+  --ef-warning:        #FBBF24; /* Amber 400 */
+  --ef-warning-subtle: #78350F; /* Amber 900 */
+  --ef-danger:         #F87171; /* Red 400 */
+  --ef-danger-subtle:  #7F1D1D; /* Red 900 */
+
+  /* --- NEUTRALS (BACKGROUNDS & SURFACES) --- */
+  /* Fondo navy/slate profundísimo (#0B1120) en lugar de gris estándar */
+  --ef-bg:             #0B1120; 
+  --ef-surface:        #1E293B; /* Slate 800 */
+  --ef-surface-alt:    #334155; /* Slate 700 */
+  --ef-border:         rgba(255, 255, 255, 0.08); /* Sutil línea semi-transparente sobre fondos oscuros */
+  --ef-border-strong:  rgba(255, 255, 255, 0.15); 
+
+  /* --- TYPOGRAPHY --- */
+  --ef-text-primary:   #F8FAFC; /* Slate 50 */
+  --ef-text-secondary: #CBD5E1; /* Slate 300 */
+  --ef-text-muted:     #94A3B8; /* Slate 400 */
+  --ef-text-inverse:   #0F172A; /* Slate 900 */
+
+  /* --- NAVBAR --- */
+  --ef-navbar-bg:      #0F172A; /* Slate 900 */
+  --ef-navbar-border:  #1E293B; /* Slate 800 */
+  --ef-navbar-text:    #F8FAFC; /* Slate 50 */
+
+  /* --- SEMANTIC ACTIONS --- */
+  --ef-back:           #94A3B8; /* Slate 400 */
+  --ef-back-hover:     #CBD5E1; /* Slate 300 */
+  --ef-back-subtle:    #334155; /* Slate 700 */
+  
+  --ef-create:         #2563EB; /* Blue 600 */
+  --ef-create-hover:   #3B82F6; /* Blue 500 */
+  --ef-create-subtle:  #1E3A8A; /* Blue 900 */
+  
+  --ef-edit:           #6366F1; /* Indigo 500 */
+  --ef-edit-hover:     #818CF8; /* Indigo 400 */
+  --ef-edit-subtle:    #312E81; /* Indigo 900 */
+
+  /* --- SHADOWS --- */
+  --ef-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.5);
+  --ef-shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.6), 0 1px 2px -1px rgb(0 0 0 / 0.6);
+  --ef-shadow:    0 4px 6px -1px rgb(0 0 0 / 0.6), 0 2px 4px -2px rgb(0 0 0 / 0.6);
+  --ef-shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.6), 0 4px 6px -4px rgb(0 0 0 / 0.6);
+  --ef-shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.6), 0 8px 10px -6px rgb(0 0 0 / 0.6);
+
+  /* --- BOOTSTRAP OVERRIDES --- */
+  --bs-primary:              #2563EB; /* Blue 600 */
+  --bs-primary-rgb:          59, 130, 246;
+  --bs-primary-text-emphasis:#93C5FD;
+  --bs-primary-bg-subtle:    #1E3A8A;
+  --bs-primary-border-subtle:#2563EB;
+
+  --bs-success:              #16A34A; /* Green 600 */
+  --bs-success-rgb:          22, 163, 74;
+  --bs-success-text-emphasis:#4ADE80;
+  --bs-success-bg-subtle:    #14532D;
+
+  --bs-danger:               #F87171;
+  --bs-danger-rgb:           248, 113, 113;
+  --bs-warning:              #FBBF24;
+  --bs-warning-rgb:          251, 191, 36;
+
+  --bs-info:                 #22D3EE; /* Cyan 400 */
+  --bs-info-rgb:             34, 211, 238;
+  --bs-info-text-emphasis:   #67E8F9; /* Cyan 300 */
+  --bs-info-bg-subtle:       #164E63; /* Cyan 900 */
+  --bs-info-border-subtle:   #0E7490; /* Cyan 700 */
+
+  --bs-body-bg:              #0B1120;
+  --bs-body-color:           #F8FAFC;
+  --bs-border-color:         var(--ef-border);
+  --bs-card-bg:              #1E293B;
+  --bs-card-border-color:    var(--ef-border);
+
+  --bs-link-color:           #60A5FA;
+  --bs-link-hover-color:     #93C5FD;
+  --bs-link-color-rgb:       96, 165, 250;
+
+  --bs-secondary-color:      #CBD5E1;
+  --bs-tertiary-color:       #94A3B8;
+  --bs-secondary-bg:         #334155;
+  --bs-tertiary-bg:          #1E293B;
+}

@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mi perfil - EncuentraFormación</title>
+  <script src="/js/comun/theme.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" integrity="sha384-XGjxtQfXaH2tnPFa9x+ruJTuLE3Aa6LhHSWRr1XeTyhezb4abCG4ccI5AkVDxqC+" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+<body class="ef-panel-body">
+
+  <div id="navbar-container"></div>
+
+  <main class="ef-panel-main">
+    <div class="container px-4" style="max-width: 860px;">
+
+      <div class="ef-page-header">
+        <div>
+          <h1 class="ef-page-title">Mi perfil</h1>
+          <p id="fechaAlta" class="text-muted small mb-0 mt-1"></p>
+        </div>
+        <a href="/" class="btn btn-outline-secondary btn-sm">
+          <i class="bi bi-arrow-left me-1"></i> Inicio
+        </a>
+      </div>
+
+      <!-- Tabs -->
+      <ul class="nav nav-tabs mb-0" id="perfilTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="tab-datos" data-bs-toggle="tab" data-bs-target="#panel-datos"
+                  type="button" role="tab">
+            <i class="bi bi-person me-1"></i>Datos personales
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="tab-seguridad" data-bs-toggle="tab" data-bs-target="#panel-seguridad"
+                  type="button" role="tab">
+            <i class="bi bi-lock me-1"></i>Cambiar contraseña
+          </button>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+
+        <!-- Panel: Datos personales -->
+        <div class="tab-pane fade show active" id="panel-datos" role="tabpanel">
+          <div class="card border-top-0 rounded-top-0">
+            <div class="card-body p-4">
+              <div id="recuadroAlert" class="alert alert-danger d-none mb-4" role="alert"></div>
+              <div id="alertExito" class="alert alert-success d-none mb-4" role="alert">Perfil actualizado correctamente.</div>
+
+              <form id="formPerfil">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label">Nombre <span class="text-required">*</span></label>
+                    <input id="nombre" class="form-control" type="text" required maxlength="100">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Apellidos <span class="text-required">*</span></label>
+                    <input id="apellidos" class="form-control" type="text" required maxlength="150">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Email</label>
+                    <input id="email" class="form-control" type="email" maxlength="150">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Usuario</label>
+                    <input id="username" class="form-control" type="text" maxlength="50">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Teléfono</label>
+                    <input id="telefono" class="form-control" type="tel" maxlength="20">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Fecha de nacimiento</label>
+                    <input id="fechaNacimiento" class="form-control" type="date">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Sexo</label>
+                    <select id="sexo" class="form-select">
+                      <option value="">No especificado</option>
+                      <option value="MASCULINO">Hombre</option>
+                      <option value="FEMENINO">Mujer</option>
+                      <option value="OTRO">Otro</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Sección visible solo para estudiantes -->
+                <div id="seccionEstudiante" class="d-none">
+                  <hr class="my-4">
+                  <h3 class="h6 mb-3">Perfil de estudiante</h3>
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label class="form-label">Nivel de estudios</label>
+                      <select id="gradoEstudiosId" class="form-select">
+                        <option value="">No especificado</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Provincia</label>
+                      <div class="ef-combobox position-relative" id="comboProvincia">
+                        <div class="ef-combobox-wrap d-flex align-items-center" id="comboProvinciaWrap">
+                          <input type="text" id="provinciaInput" class="form-control"
+                                 placeholder="Buscar provincia..." autocomplete="off">
+                          <button type="button" class="ef-combobox-clear d-none" id="comboProvincia-clear"
+                                  title="Quitar selección">
+                            <i class="bi bi-x-lg"></i>
+                          </button>
+                        </div>
+                        <ul class="ef-combobox-dropdown d-none" id="comboProvinciaLista"></ul>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Localidad</label>
+                      <input id="localidad" class="form-control" type="text" maxlength="100" placeholder="Tu ciudad o municipio">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-4">
+                  <button type="submit" class="btn btn-primary" id="btnGuardar">
+                    <i class="bi bi-save me-1"></i> Guardar cambios
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel: Seguridad -->
+        <div class="tab-pane fade" id="panel-seguridad" role="tabpanel">
+          <div class="card border-top-0 rounded-top-0">
+            <div class="card-body p-4">
+              <div id="passError" class="alert alert-danger d-none mb-4" role="alert"></div>
+              <div id="passExito" class="alert alert-success d-none mb-4" role="alert">Contraseña actualizada correctamente.</div>
+
+              <form id="formPassword" novalidate>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label for="passActual" class="form-label">Contraseña actual <span class="text-required">*</span></label>
+                    <div class="input-group">
+                      <input type="password" class="form-control" id="passActual" required>
+                      <button type="button" class="ef-toggle-password" id="togglePassActual" tabindex="-1" title="Mostrar/ocultar contraseña">
+                        <i class="bi bi-eye" id="togglePassActualIcon"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row g-3 mt-0">
+                  <div class="col-md-6">
+                    <label for="passNueva" class="form-label">Nueva contraseña <span class="text-required">*</span></label>
+                    <div class="input-group">
+                      <input type="password" class="form-control" id="passNueva" required>
+                      <button type="button" class="ef-toggle-password" id="togglePassNueva" tabindex="-1" title="Mostrar/ocultar contraseña">
+                        <i class="bi bi-eye" id="togglePassNuevaIcon"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="passNuevaConfirm" class="form-label">Confirmar nueva contraseña <span class="text-required">*</span></label>
+                    <div class="input-group">
+                      <input type="password" class="form-control" id="passNuevaConfirm" required>
+                      <button type="button" class="ef-toggle-password" id="togglePassNuevaConfirm" tabindex="-1" title="Mostrar/ocultar contraseña">
+                        <i class="bi bi-eye" id="togglePassNuevaConfirmIcon"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div id="passFeedback" class="text-danger small" style="display:none"></div>
+                  </div>
+                </div>
+
+                <div class="mt-4">
+                  <button type="submit" class="btn btn-primary" id="btnCambiarPass">
+                    <i class="bi bi-lock me-1"></i> Cambiar contraseña
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <div id="footer-container"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="/js/comun/navbar.js"></script>
+  <script src="/js/comun/footer.js"></script>
+  <script src="/js/comun/utils.js"></script>
+  <script src="/js/comun/perfil.js"></script>
+</body>
+</html>

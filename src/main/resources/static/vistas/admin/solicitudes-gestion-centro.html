@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solicitudes de gestión - EncuentraFormación</title>
+    <script src="/js/comun/theme.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" integrity="sha384-XGjxtQfXaH2tnPFa9x+ruJTuLE3Aa6LhHSWRr1XeTyhezb4abCG4ccI5AkVDxqC+" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/components.css">
+</head>
+
+<body class="ef-panel-body">
+
+    <div id="navbar-container"></div>
+
+    <main class="ef-panel-main">
+        <div class="container-fluid px-4">
+
+            <div class="ef-page-header">
+                <div>
+                    <h1 class="ef-page-title">Solicitudes de gestión pendientes</h1>
+                    <p class="ef-page-subtitle">Revisa y responde a las solicitudes para gestionar centros</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="/vistas/admin/historial-solicitudes.html" class="btn btn-outline-secondary">
+                        <i class="bi bi-clock-history me-1"></i> Ver historial
+                    </a>
+                    <a href="/vistas/admin/menu-admin.html" class="btn btn-outline-primary">
+                        <i class="bi bi-arrow-left me-1"></i> Volver
+                    </a>
+                </div>
+            </div>
+
+            <div id="recuadroAlert" class="alert alert-danger d-none mb-3" role="alert"></div>
+
+            <!-- Barra de filtros -->
+            <div class="card mb-3 ef-filter-bar">
+                <div class="card-body py-2 px-3">
+                    <div class="row g-2 align-items-center">
+                        <div class="col-md-5">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text border-end-0"><i class="bi bi-search text-secondary"></i></span>
+                                <input type="text" id="filtroBusqueda" class="form-control border-start-0" placeholder="Buscar por solicitante o nombre de centro...">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <select id="filtroVerificado" class="form-select form-select-sm">
+                                <option value="">Todos los centros</option>
+                                <option value="true">Centros verificados</option>
+                                <option value="false">Centros no verificados</option>
+                            </select>
+                        </div>
+                        <div class="col-auto ms-auto">
+                            <button id="btnLimpiarFiltros" class="btn btn-sm btn-outline-secondary">
+                                <i class="bi bi-x-circle me-1"></i> Limpiar filtros
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover tablaSmall table-sm align-middle mb-0 text-center">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Fecha solicitud</th>
+                                    <th>Solicitante</th>
+                                    <th>Centro</th>
+                                    <th>Prueba de titularidad</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tBodySolicitudes"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="paginacionSolicitudes" class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-3 px-1"></div>
+
+        </div>
+    </main>
+
+    <!-- Dialog: detalle de solicitud -->
+    <dialog id="dialogDetalleSolicitud" class="dialog-detalle-amplio">
+        <div class="d-flex justify-content-between align-items-center">
+            <h3 class="text-gradient-primary dialog-title mb-0">Detalle de solicitud</h3>
+            <button id="btnCerrarDialogDetalleSolicitud" type="button" class="btn-close" aria-label="Cerrar"></button>
+        </div>
+        <div id="contenidoDetalleSolicitud" class="mt-3"></div>
+        <div class="d-flex justify-content-end mt-3">
+            <button id="btnCerrarDetalleSolicitudFooter" type="button" class="btn btn-outline-secondary px-4">Cerrar</button>
+        </div>
+    </dialog>
+
+    <!-- Dialog: ver prueba de titularidad (imagen o PDF) -->
+    <dialog id="dialogVerImagen">
+        <h4 class="text-gradient-edit text-center mb-4">Prueba de titularidad</h4>
+
+        <div id="contenedorPrueba" class="text-center mb-4"></div>
+
+        <div class="d-flex justify-content-center mt-4">
+            <button id="btnCerrarDialogVerImagen" type="button" class="btn btn-outline-edit px-4">
+                Cerrar
+            </button>
+        </div>
+    </dialog>
+
+    <!-- Dialog: datos del solicitante -->
+    <dialog id="dialogDetalleUsuario" class="dialog-detalle-amplio">
+        <div class="d-flex justify-content-between align-items-center">
+            <h3 class="text-gradient-primary dialog-title mb-0">Datos del solicitante</h3>
+            <button id="btnCerrarDialogDetalleUsuario" type="button" class="btn-close" aria-label="Cerrar"></button>
+        </div>
+
+        <div id="contenidoDetalleUsuario">
+            <p class="text-center ef-color-muted">Cargando datos...</p>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center">
+            <a id="btnIrGestionUsuario" href="#" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-box-arrow-up-right me-1"></i>Gestionar usuario
+            </a>
+            <button id="btnCerrarDetalleUsuarioFooter" type="button" class="btn btn-outline-secondary px-4">Cerrar</button>
+        </div>
+    </dialog>
+
+    <!-- Dialog: datos del centro -->
+    <dialog id="dialogDetalleCentro" class="dialog-detalle-amplio">
+        <div class="d-flex justify-content-between align-items-center">
+            <h3 class="text-gradient-primary dialog-title mb-0">Datos del centro</h3>
+            <button id="btnCerrarDialogDetalleCentro" type="button" class="btn-close" aria-label="Cerrar"></button>
+        </div>
+
+        <div id="contenidoDetalleCentro">
+            <p class="text-center ef-color-muted">Cargando datos...</p>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center">
+            <a id="btnIrGestionCentro" href="#" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-box-arrow-up-right me-1"></i>Gestionar centro
+            </a>
+            <button id="btnCerrarDetalleCentroFooter" type="button" class="btn btn-outline-secondary px-4">Cerrar</button>
+        </div>
+    </dialog>
+
+    <div id="footer-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="/js/comun/navbar.js"></script>
+    <script src="/js/comun/footer.js"></script>
+    <script src="/js/comun/confirm-modal.js"></script>
+    <script src="/js/admin/solicitudesGestionCentro.js"></script>
+</body>
+
+</html>

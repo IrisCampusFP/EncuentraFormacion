@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Panel de gestión - EncuentraFormación</title>
+  <script src="/js/comun/theme.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" integrity="sha384-XGjxtQfXaH2tnPFa9x+ruJTuLE3Aa6LhHSWRr1XeTyhezb4abCG4ccI5AkVDxqC+" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+<body class="ef-panel-body">
+
+  <div id="navbar-container"></div>
+
+  <main class="ef-panel-main">
+    <div class="container py-4">
+
+      <!-- Cabecera del centro -->
+      <div class="card border-0 shadow-sm p-4 mb-4" id="centroHeader">
+        <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+          <div>
+            <div class="d-flex align-items-baseline gap-2 flex-wrap mb-2">
+              <h1 class="h3 fw-bold mb-0" id="centroNombre">Cargando...</h1>
+              <span id="centroBadgeTipo"></span>
+              <span id="centroBadgeVerif" class="d-none"><i class="bi bi-patch-check-fill ef-verified-icon ef-verified-icon--baseline" title="Centro verificado"></i></span>
+            </div>
+            <p class="text-muted mb-0 small" id="centroContacto"></p>
+          </div>
+          <div class="d-flex gap-2 flex-wrap">
+            <a id="linkPerfilPublico" href="#" class="btn btn-outline-secondary btn-sm">
+              <i class="bi bi-eye me-1"></i>Ver perfil público
+            </a>
+            <button id="btnEditarCentro" class="btn btn-outline-primary btn-sm">
+              <i class="bi bi-pencil me-1"></i>Editar datos
+            </button>
+          </div>
+        </div>
+        <p class="mt-3 mb-0 text-secondary" id="centroDescripcionInfo"></p>
+      </div>
+
+      <div class="row g-4">
+        <!-- Columna principal -->
+        <div class="col-lg-8">
+
+          <!-- Formaciones -->
+          <div class="card border-0 shadow-sm p-4 mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="fw-semibold mb-0"><i class="bi bi-mortarboard-fill me-2 ef-color-primary"></i>Mis formaciones</h5>
+              <button id="btnNuevaFormacion" class="btn btn-primary btn-sm">
+                <i class="bi bi-plus-circle me-1"></i>Nueva formación
+              </button>
+            </div>
+            <div id="listaFormaciones" class="d-flex flex-column gap-3">
+              <div class="text-center text-muted py-3"><div class="spinner-border spinner-border-sm"></div></div>
+            </div>
+            <div id="paginacionFormaciones" class="d-none mt-3">
+              <div class="d-flex align-items-center justify-content-between">
+                <span class="text-muted" style="font-size:.8rem;" id="paginacionInfo"></span>
+                <div class="ef-pagination d-flex align-items-center gap-1">
+                  <button id="btnPagAnterior" class="ef-page-arrow" title="Página anterior">
+                    <i class="bi bi-chevron-left"></i>
+                  </button>
+                  <div id="paginacionNums" class="d-flex align-items-center gap-1"></div>
+                  <button id="btnPagSiguiente" class="ef-page-arrow" title="Página siguiente">
+                    <i class="bi bi-chevron-right"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ -->
+          <div class="card border-0 shadow-sm p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="fw-semibold mb-0"><i class="bi bi-question-circle me-2 ef-color-accent"></i>Preguntas frecuentes</h5>
+              <button id="btnNuevaFaq" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-plus-circle me-1"></i>Añadir FAQ
+              </button>
+            </div>
+            <div id="listaFaq">
+              <div class="text-center text-muted py-3"><div class="spinner-border spinner-border-sm"></div></div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Sidebar estado -->
+        <div class="col-lg-4">
+          <div class="card border-0 shadow-sm p-4 sticky-top ef-sticky-top-2rem">
+            <h6 class="fw-semibold mb-4"><i class="bi bi-info-circle me-2 ef-color-secondary"></i>Estado general</h6>
+
+            <div class="d-flex align-items-center mb-4">
+              <div class="ef-stat-icon bg-warning-subtle text-warning me-3">
+                <i class="bi bi-file-earmark-text fs-4"></i>
+              </div>
+              <div>
+                <h4 class="h3 mb-0" id="statSolicitudesPendientes">—</h4>
+                <p class="text-muted mb-1 small">Solicitudes pendientes</p>
+                <a href="/vistas/gestor/solicitudes.html" class="text-decoration-none small">Ver solicitudes <i class="bi bi-arrow-right"></i></a>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-center">
+              <div class="ef-stat-icon bg-primary-subtle text-primary me-3">
+                <i class="bi bi-chat-dots fs-4"></i>
+              </div>
+              <div>
+                <h4 class="h3 mb-0" id="statMensajesSinLeer">—</h4>
+                <p class="text-muted mb-1 small">Mensajes sin leer</p>
+                <a href="/vistas/gestor/chat.html" class="text-decoration-none small">Ir al chat <i class="bi bi-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Modal editar centro -->
+  <div class="modal fade" id="modalEditarCentro" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar datos del centro</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="formCentro">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Nombre comercial <small class="text-muted">(solo lectura)</small></label>
+                <input id="cNombreComercial" class="form-control bg-body-secondary" type="text" readonly>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Código de centro <small class="text-muted">(solo lectura)</small></label>
+                <input id="cCodigo" class="form-control bg-body-secondary" type="text" readonly>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Tipo de centro</label>
+                <select id="cTipo" class="form-select">
+                  <option value="PUBLICO">Público</option>
+                  <option value="PRIVADO">Privado</option>
+                  <option value="CONCERTADO">Concertado</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Teléfono</label>
+                <input id="cTelefono" class="form-control" type="tel" maxlength="20">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Email de contacto</label>
+                <input id="cEmail" class="form-control" type="email" maxlength="150">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Página web</label>
+                <input id="cWeb" class="form-control" type="url">
+              </div>
+              <div class="col-12">
+                <label class="form-label">Dirección</label>
+                <input id="cDireccion" class="form-control" type="text" maxlength="255">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Localidad</label>
+                <input id="cLocalidad" class="form-control" type="text" maxlength="100">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Provincia</label>
+                <input id="cProvincia" class="form-control" type="text" maxlength="100">
+              </div>
+              <div class="col-12">
+                <label class="form-label">Descripción</label>
+                <textarea id="cDescripcion" class="form-control" rows="4"></textarea>
+              </div>
+            </div>
+            <div class="mt-3">
+              <a href="mailto:admin@encuentraformacion.com" class="text-muted small d-block mb-3">
+                ¿Necesitas cambiar el nombre o código? Contacta con administración
+              </a>
+              <div class="d-flex justify-content-end gap-2">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dialog formación -->
+  <dialog id="dialogFormacion">
+    <h3 class="dialog-title" id="dialogFormacionTitulo">Nueva formación</h3>
+    <div id="dialogFormacionError" class="alert alert-danger d-none mb-3"></div>
+    <form id="formFormacion">
+      <div class="row g-3">
+        <div class="col-12">
+          <label class="form-label">Nombre <span class="text-required">*</span></label>
+          <input id="fNombre" class="form-control" type="text" required maxlength="200">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Tipo de estudios <span class="text-required">*</span></label>
+          <select id="fTipoEstudios" class="form-select" required>
+            <option value="">Seleccionar...</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Horario <span class="text-required">*</span></label>
+          <select id="fHorario" class="form-select" required>
+            <option value="">Seleccionar...</option>
+            <option value="MANANA">Mañana</option>
+            <option value="TARDE">Tarde</option>
+            <option value="NOCHE">Noche</option>
+            <option value="FLEXIBLE">Flexible</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Modalidad <span class="text-required">*</span></label>
+          <select id="fModalidad" class="form-select" required>
+            <option value="">Seleccionar...</option>
+            <option value="PRESENCIAL">Presencial</option>
+            <option value="DISTANCIA">A distancia</option>
+            <option value="SEMIPRESENCIAL">Semipresencial</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Duración (horas)</label>
+          <input id="fDuracion" class="form-control" type="number" min="0">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Precio (€)</label>
+          <input id="fPrecio" class="form-control" type="number" step="0.01" min="0">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Título oficial</label>
+          <input id="fTituloOficial" class="form-control" type="text">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Fecha inicio</label>
+          <input id="fFechaInicio" class="form-control" type="date">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Fecha fin</label>
+          <input id="fFechaFin" class="form-control" type="date">
+        </div>
+        <div class="col-12">
+          <label class="form-label">Descripción</label>
+          <textarea id="fDescripcion" class="form-control" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="mt-3 d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-outline-secondary" id="btnCancelarFormacion">Cancelar</button>
+        <button type="submit" class="btn btn-primary" id="btnGuardarFormacion">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Dialog FAQ -->
+  <dialog id="dialogFaq">
+    <h3 class="dialog-title" id="dialogFaqTitulo">Nueva pregunta frecuente</h3>
+    <div id="dialogFaqError" class="alert alert-danger d-none mb-3"></div>
+    <form id="formFaq">
+      <div class="mb-3">
+        <label class="form-label">Pregunta <span class="text-required">*</span></label>
+        <input id="faqPregunta" class="form-control" type="text" required maxlength="500">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Respuesta <span class="text-required">*</span></label>
+        <textarea id="faqRespuesta" class="form-control" rows="4" required></textarea>
+      </div>
+      <div class="d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-outline-secondary" id="btnCancelarFaq">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Modal vista previa perfil público -->
+  <div class="modal fade" id="modalPreviewPerfil" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+      <div class="modal-content">
+
+        <!-- Barra de preview: siempre visible, inequívoca -->
+        <div class="ef-preview-bar">
+          <div class="ef-preview-bar__left">
+            <span class="ef-preview-badge"><i class="bi bi-eye-fill"></i>Vista previa</span>
+            <span class="ef-preview-label">Así aparece tu centro para los estudiantes</span>
+          </div>
+          <button type="button" class="ef-preview-close" data-bs-dismiss="modal" aria-label="Cerrar vista previa">
+            <i class="bi bi-x-lg"></i>Cerrar
+          </button>
+        </div>
+
+        <!-- Cuerpo: el iframe ocupa todo el espacio restante -->
+        <div class="ef-preview-body">
+          <iframe id="iframePreviewPerfil" src="about:blank" title="Vista previa del perfil público"></iframe>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div id="footer-container"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="/js/comun/confirm-modal.js"></script>
+  <script src="/js/comun/navbar.js"></script>
+  <script src="/js/comun/footer.js"></script>
+  <script src="/js/comun/utils.js"></script>
+  <script src="/js/gestor/vistaGestionCentro.js"></script>
+</body>
+</html>

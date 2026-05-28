@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Panel de administración - EncuentraFormación</title>
+    <script src="/js/comun/theme.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" integrity="sha384-XGjxtQfXaH2tnPFa9x+ruJTuLE3Aa6LhHSWRr1XeTyhezb4abCG4ccI5AkVDxqC+" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/components.css">
+</head>
+
+<body class="ef-panel-body">
+
+    <div id="navbar-container"></div>
+
+    <main class="ef-panel-main">
+        <div class="container">
+
+            <div class="ef-page-header">
+                <div>
+                    <h1 class="ef-page-title">Panel de administración</h1>
+                    <p class="ef-page-subtitle">Gestiona usuarios, centros y solicitudes del sistema</p>
+                </div>
+            </div>
+
+            <div id="botonesGestion" class="row g-4">
+                <div class="col-md-6">
+                    <a href="/vistas/admin/gestion-usuarios.html" class="ef-nav-card">
+                        <div class="ef-nav-card-icon ef-nav-card-icon--blue">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+                        <h2 class="ef-nav-card-title">Gestión de usuarios</h2>
+                        <p class="ef-nav-card-desc">Crea, edita y gestiona las cuentas de usuario del sistema.</p>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="/vistas/admin/gestion-centros.html" class="ef-nav-card">
+                        <div class="ef-nav-card-icon ef-nav-card-icon--indigo">
+                            <i class="bi bi-building-fill"></i>
+                        </div>
+                        <h2 class="ef-nav-card-title">Gestión de centros</h2>
+                        <p class="ef-nav-card-desc">Administra los centros formativos registrados en la plataforma.</p>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="/vistas/admin/verificacion-centros.html" class="ef-nav-card">
+                        <div class="ef-nav-card-icon ef-nav-card-icon--green">
+                            <i class="bi bi-patch-check-fill"></i>
+                        </div>
+                        <h2 class="ef-nav-card-title">Verificación de centros</h2>
+                        <p class="ef-nav-card-desc">Revisa y verifica los nuevos centros que esperan aprobación.</p>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="/vistas/admin/solicitudes-gestion-centro.html" class="ef-nav-card">
+                        <div class="ef-nav-card-icon ef-nav-card-icon--amber">
+                            <i class="bi bi-clipboard2-check-fill"></i>
+                        </div>
+                        <h2 class="ef-nav-card-title">Solicitudes de gestión</h2>
+                        <p class="ef-nav-card-desc">Gestiona las solicitudes de los gestores para administrar centros.</p>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="/js/comun/navbar.js"></script>
+    <script src="/js/comun/footer.js"></script>
+</body>
+
+</html>

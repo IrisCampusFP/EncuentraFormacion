@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+
+    <!--
+        CVE-2022-31691 — Afecta a Spring Tools IDE (plugin de Eclipse/VS Code), no a
+        spring-boot-devtools en runtime. La CPE asignada por el NVD (vmware:spring_boot_tools)
+        produce un falso positivo sobre el artefacto devtools.
+        Referencia: https://tanzu.vmware.com/security/cve-2022-31691
+    -->
+    <suppress>
+        <notes>Falso positivo: CVE-2022-31691 afecta a Spring Tools IDE, no a spring-boot-devtools.</notes>
+        <gav regex="true">^org\.springframework\.boot:spring-boot-devtools:.*$</gav>
+        <cve>CVE-2022-31691</cve>
+    </suppress>
+
+    <!--
+        CVE-2025-7962 — angus-activation 2.0.3, dependencia transitiva gestionada por el BOM
+        de Spring Boot 4.0.6. No existe versión superior compatible disponible en el BOM.
+        Se revisa con cada actualización del BOM de Spring Boot.
+    -->
+    <suppress>
+        <notes>Dependencia transitiva gestionada por Spring Boot BOM; sin versión compatible con fix disponible.</notes>
+        <gav regex="true">^org\.eclipse\.angus:angus-activation:.*$</gav>
+        <cve>CVE-2025-7962</cve>
+    </suppress>
+
+    <!--
+        CVE-2026-42198 — postgresql JDBC driver 42.7.10, versión gestionada por el BOM de
+        Spring Boot 4.0.6. CVE con fecha 2026, posible entrada prematura en el NVD sin fix
+        publicado. Se revisa con cada actualización del BOM.
+    -->
+    <suppress>
+        <notes>Versión gestionada por Spring Boot BOM; CVE sin fix disponible en el ecosistema actual.</notes>
+        <gav regex="true">^org\.postgresql:postgresql:.*$</gav>
+        <cve>CVE-2026-42198</cve>
+    </suppress>
+
+    <!--
+        CVE-2026-41284, CVE-2026-42498 — tomcat-embed-core 11.0.21, versión gestionada por el
+        BOM de Spring Boot 4.0.6. CVEs con fecha 2026, sin versión de Tomcat 11.x con fix
+        publicado compatible con el BOM actual. Se revisan con cada actualización del BOM.
+    -->
+    <suppress>
+        <notes>Versión gestionada por Spring Boot BOM; CVEs sin fix disponible en Tomcat 11.x compatible.</notes>
+        <gav regex="true">^org\.apache\.tomcat\.embed:tomcat-embed-.*:.*$</gav>
+        <cve>CVE-2026-41284</cve>
+    </suppress>
+    <suppress>
+        <notes>Versión gestionada por Spring Boot BOM; CVEs sin fix disponible en Tomcat 11.x compatible.</notes>
+        <gav regex="true">^org\.apache\.tomcat\.embed:tomcat-embed-.*:.*$</gav>
+        <cve>CVE-2026-42498</cve>
+    </suppress>
+
+</suppressions>

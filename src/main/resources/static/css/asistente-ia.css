@@ -1,0 +1,273 @@
+/* Asistente IA - Estilos específicos */
+
+.ai-chat-container {
+    height: calc(100vh - 200px);
+    min-height: 500px;
+}
+
+.ai-avatar {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--bs-primary) 0%, #6610f2 100%);
+}
+
+.ai-avatar-sm {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+}
+
+.ai-avatar-lg {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--bs-primary) 0%, #6610f2 100%);
+}
+
+.max-w-85 {
+    max-width: 85%;
+}
+
+.max-w-600 {
+    max-width: 600px;
+}
+
+.message-bubble {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    position: relative;
+    word-break: break-word;
+}
+
+.user-message .message-bubble {
+    border-bottom-right-radius: 4px !important;
+}
+
+.user-message .message-bubble p {
+    color: #ffffff;
+}
+
+.assistant-message .message-bubble {
+    border-top-left-radius: 4px !important;
+}
+
+.ai-welcome-card {
+    background: white;
+    border-radius: 2rem;
+    border: 1px solid rgba(0,0,0,0.05);
+    padding: 4rem 4rem;
+}
+
+.suggestion-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.suggestion-grid .btn {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+
+@media (max-width: 768px) {
+    .suggestion-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .ai-welcome-card {
+        padding: 2rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .suggestion-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.hover-lift {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+.ai-send-btn {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+#inputMensaje {
+    resize: none;
+    overflow-y: auto;
+    max-height: 160px;
+    field-sizing: content;
+    border: 1px solid rgba(0,0,0,0.1);
+    padding: 0.8rem 1rem;
+    transition: border-color 0.2s ease;
+}
+
+#inputMensaje:focus {
+    border-color: var(--bs-primary);
+    box-shadow: none;
+}
+
+.sesion-item {
+    border-left: 4px solid transparent;
+}
+
+.sesion-item:hover {
+    background-color: var(--bs-light);
+}
+
+.sesion-item.active {
+    background-color: var(--bs-primary-bg-subtle);
+    border-left-color: var(--bs-primary);
+}
+
+.sesion-item.active .sesion-titulo {
+    color: var(--bs-primary);
+}
+
+.sesion-acciones {
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+.sesion-item:hover .sesion-acciones,
+.sesion-item.active .sesion-acciones {
+    opacity: 1;
+}
+
+.sesion-acciones .btn-link {
+    line-height: 1;
+    text-decoration: none;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.message-wrapper {
+    animation: fadeIn 0.3s ease forwards;
+}
+
+/* Markdown styling in messages */
+.message-text p:last-child {
+    margin-bottom: 0;
+}
+
+.message-text code {
+    background: rgba(0,0,0,0.05);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+}
+
+.message-text ul, .message-text ol {
+    margin-bottom: 0;
+    padding-left: 1.5rem;
+}
+
+/* Card Formación Compact */
+.card-formacion-compact {
+    transition: transform 0.2s ease;
+}
+
+.card-formacion-compact:hover {
+    transform: scale(1.02);
+}
+
+#placeholderMensajes {
+    min-height: 100%;
+}
+
+/* --- MODO OSCURO --- */
+
+/* Hover y selección de sesiones */
+[data-bs-theme="dark"] .sesion-item:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+[data-bs-theme="dark"] .sesion-item.active {
+    background-color: rgba(var(--bs-primary-rgb), 0.15);
+    border-left-color: var(--bs-primary);
+}
+
+[data-bs-theme="dark"] .sesion-item.active .sesion-titulo {
+    color: #93C5FD;
+}
+
+/* Los cards necesitan borde para distinguirse del body-bg */
+[data-bs-theme="dark"] .ai-chat-container .card {
+    border: 1px solid var(--bs-border-color) !important;
+}
+
+/* Header y footer del chat: ligero overlay para dar estructura sin exceso de contraste */
+[data-bs-theme="dark"] #cabeceraChat {
+    background-color: rgba(255, 255, 255, 0.06) !important;
+    border-color: var(--bs-border-color) !important;
+}
+
+[data-bs-theme="dark"] #chatCard .card-body > .bg-white {
+    background-color: rgba(255, 255, 255, 0.06) !important;
+    border-color: var(--bs-border-color) !important;
+}
+
+/* Área de mensajes: fondo limpio igual que el card, sin la caja gris */
+[data-bs-theme="dark"] #chatCard .card-body {
+    background-color: var(--bs-body-bg) !important;
+}
+
+/* Burbujas del asistente: overlay sutil para distinguirse del fondo */
+[data-bs-theme="dark"] .assistant-message .message-bubble {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    border-color: var(--bs-border-color-translucent) !important;
+}
+
+/* Card de bienvenida y sugerencias */
+[data-bs-theme="dark"] .ai-welcome-card {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--bs-border-color);
+}
+
+[data-bs-theme="dark"] .suggestion-grid .btn {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    border-color: var(--bs-border-color) !important;
+    color: var(--bs-body-color) !important;
+}
+
+[data-bs-theme="dark"] #inputMensaje {
+    border-color: var(--bs-border-color);
+}
+
+/* Scrollbar personalizado */
+#contenedorMensajes::-webkit-scrollbar {
+    width: 6px;
+}
+
+#contenedorMensajes::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#contenedorMensajes::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+
+#contenedorMensajes::-webkit-scrollbar-thumb:hover {
+    background: rgba(0,0,0,0.2);
+}

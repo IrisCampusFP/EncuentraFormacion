@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registro de gestor de centro - EncuentraFormación</title>
+    <script src="/js/comun/theme.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" integrity="sha384-XGjxtQfXaH2tnPFa9x+ruJTuLE3Aa6LhHSWRr1XeTyhezb4abCG4ccI5AkVDxqC+" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/components.css">
+</head>
+
+<body class="ef-auth-body">
+
+    <div class="ef-theme-float">
+        <button id="themeToggle" class="ef-btn-icon" title="Cambiar a modo oscuro">
+            <i id="themeIcon" class="bi bi-moon-fill"></i>
+        </button>
+    </div>
+
+    <div class="ef-auth-wrapper py-4">
+        <div class="ef-auth-card ef-auth-card--wide">
+
+            <div class="ef-auth-header">
+                <div class="ef-logo-mark">EF</div>
+                <h1 class="ef-auth-title">Gestionar un centro</h1>
+                <p class="ef-auth-tagline">
+                    Introduce tus datos y selecciona tu centro para enviar la solicitud.<br>
+                    ¿Ya tienes cuenta?
+                    <a href="/vistas/auth/login.html" class="fw-semibold">Inicia sesión aquí</a>
+                </p>
+            </div>
+
+            <form id="formularioRegistroGestor">
+                <div id="registroError" class="alert alert-danger d-none mb-4" role="alert"></div>
+
+                <p class="ef-section-title">Tus datos</p>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label for="nombre" class="form-label">Nombre <span class="text-required">*</span></label>
+                        <input type="text" class="form-control" id="nombre" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="apellidos" class="form-label">Apellidos <span class="text-required">*</span></label>
+                        <input type="text" class="form-control" id="apellidos" required>
+                    </div>
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label for="email" class="form-label">Correo electrónico <span class="text-required">*</span></label>
+                        <input type="email" class="form-control" id="email" required>
+                        <div id="emailError" class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="username" class="form-label">Nombre de usuario <span class="text-required">*</span></label>
+                        <input type="text" class="form-control" id="username" required>
+                        <div id="usernameError" class="invalid-feedback"></div>
+                    </div>
+                </div>
+
+                <div class="row g-3 mb-1">
+                    <div class="col-md-6">
+                        <label for="password" class="form-label">Contraseña <span class="text-required">*</span></label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password" required>
+                            <button type="button" class="ef-toggle-password" id="togglePassword"
+                                    tabindex="-1" title="Mostrar/ocultar contraseña">
+                                <i class="bi bi-eye" id="togglePasswordIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="password2" class="form-label">Confirmar contraseña <span class="text-required">*</span></label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password2" required>
+                            <button type="button" class="ef-toggle-password" id="togglePassword2"
+                                    tabindex="-1" title="Mostrar/ocultar contraseña">
+                                <i class="bi bi-eye" id="togglePassword2Icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div id="passwordFeedback" class="text-danger small" style="display:none"></div>
+                    </div>
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label for="telefono" class="form-label">Teléfono <span class="text-muted fw-normal">(Opcional)</span></label>
+                        <input type="text" class="form-control" id="telefono">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="dni" class="form-label">DNI <span class="text-muted fw-normal">(Opcional)</span></label>
+                        <input type="text" class="form-control" id="dni">
+                    </div>
+                </div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label for="fechaNacimiento" class="form-label">Fecha de nacimiento <span class="text-muted fw-normal">(Opcional)</span></label>
+                        <input type="date" class="form-control" id="fechaNacimiento">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="sexo" class="form-label">Sexo <span class="text-muted fw-normal">(Opcional)</span></label>
+                        <select class="form-select" id="sexo">
+                            <option value="" selected disabled>Selecciona una opción</option>
+                            <option value="MASCULINO">Masculino</option>
+                            <option value="FEMENINO">Femenino</option>
+                            <option value="OTRO">Otro</option>
+                        </select>
+                    </div>
+                </div>
+
+                <p class="ef-section-title">Centro</p>
+
+                <div class="row g-3 mb-1 align-items-end" id="seccionCodigo">
+                    <div class="col-md-8">
+                        <label for="codigoBusqueda" class="form-label">Código del Centro <span class="text-required">*</span></label>
+                        <input type="text" class="form-control" id="codigoBusqueda"
+                            maxlength="8" inputmode="numeric" pattern="\d{8}" required>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-outline-primary w-100" id="btnComprobarCodigo">
+                            <span id="btnComprobarCodigoText">Comprobar código</span>
+                            <span id="btnComprobarCodigoSpinner" class="spinner-border spinner-border-sm d-none"
+                                role="status" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="form-text">Puedes consultar el código de tu centro en el <a href="https://www.educacion.gob.es/centros/home.do" target="_blank" rel="noopener" class="text-decoration-none">directorio del Ministerio de Educación</a>.</div>
+                    </div>
+                </div>
+
+                <div id="mensajeCodigoResult" class="alert d-none mb-3" role="alert"></div>
+
+                <div id="seccionDatosCentro" class="d-none">
+                    <hr class="my-3">
+                    <p class="ef-section-title">Datos del centro</p>
+                    <input type="hidden" id="idCentroExistente">
+
+                    <div class="mb-3">
+                        <label for="nombreCentro" class="form-label">Nombre del centro <span class="text-required">*</span></label>
+                        <input type="text" class="form-control" id="nombreCentro">
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label for="direccionCentro" class="form-label">Dirección <span class="text-required">*</span></label>
+                            <input type="text" class="form-control" id="direccionCentro">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="localidadCentro" class="form-label">Localidad <span class="text-required">*</span></label>
+                            <input type="text" class="form-control" id="localidadCentro">
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Provincia <span class="text-required">*</span></label>
+                            <div class="ef-combobox position-relative" id="comboProvincia">
+                                <div class="ef-combobox-wrap d-flex align-items-center" id="comboProvinciaWrap">
+                                    <input type="text" id="provinciaCentro" class="form-control"
+                                           placeholder="Buscar provincia..." autocomplete="off">
+                                    <button type="button" class="ef-combobox-clear d-none" id="comboProvincia-clear"
+                                            title="Quitar selección">
+                                        <i class="bi bi-x-lg"></i>
+                                    </button>
+                                </div>
+                                <ul class="ef-combobox-dropdown d-none" id="comboProvinciaLista"></ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="telefonoCentro" class="form-label">Teléfono <span class="text-muted fw-normal">(Opcional)</span></label>
+                            <input type="text" class="form-control" id="telefonoCentro">
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label for="emailCentro" class="form-label">Email <span class="text-muted fw-normal">(Opcional)</span></label>
+                            <input type="email" class="form-control" id="emailCentro">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="webCentro" class="form-label">Página web <span class="text-muted fw-normal">(Opcional)</span></label>
+                            <input type="url" class="form-control" id="webCentro">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tipoCentro" class="form-label">Tipo de centro <span class="text-required">*</span></label>
+                        <select class="form-select" id="tipoCentro">
+                            <option value="" selected disabled>Selecciona una opción</option>
+                            <option value="PUBLICO">Público</option>
+                            <option value="PRIVADO">Privado</option>
+                            <option value="CONCERTADO">Concertado</option>
+                            <option value="MIXTO">Mixto</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row g-3 mb-4 d-none" id="seccionTitularidad">
+                    <hr class="mt-2 mb-3">
+                    <div class="col-12">
+                        <label for="titularidadCentro" class="form-label">
+                            Prueba de vinculación con el centro <span class="text-required">*</span>
+                        </label>
+                        <input type="file" class="form-control" id="titularidadCentro"
+                            name="titularidadCentro" accept=".jpg,.jpeg,.png,.pdf">
+                        <div class="form-text">
+                            Sube una imagen (JPG, PNG) o un documento PDF que acredite que eres titular, director o que fuiste autorizado para gestionar este centro.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-grid mb-3">
+                    <button type="submit" class="btn btn-primary btn-lg d-none" id="btnSubmitGestor">
+                        Registrarme y enviar solicitud
+                    </button>
+                </div>
+
+                <div class="text-center">
+                    <a href="/vistas/auth/elegir-tipo-cuenta.html" class="text-decoration-none ef-text-hint">
+                        &larr; Volver
+                    </a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="/js/comun/utils.js"></script>
+    <script src="/js/auth/registroGestor.js"></script>
+    <script src="/js/comun/logout.js"></script>
+</body>
+
+</html>

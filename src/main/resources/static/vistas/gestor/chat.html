@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chat - EncuentraFormación</title>
+  <script src="/js/comun/theme.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" integrity="sha384-XGjxtQfXaH2tnPFa9x+ruJTuLE3Aa6LhHSWRr1XeTyhezb4abCG4ccI5AkVDxqC+" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <style>
+    .chat-item {
+      border-left: 4px solid transparent;
+      transition: background-color 0.15s ease, border-left-color 0.15s ease;
+      cursor: pointer;
+    }
+    .chat-item:hover:not(.chat-item-active) {
+      background-color: rgba(0, 0, 0, 0.03);
+    }
+    .chat-item-active {
+      background-color: var(--bs-primary-bg-subtle);
+      border-left: 4px solid var(--bs-primary) !important;
+    }
+    .ef-evento-solicitud:hover {
+      background-color: var(--bs-tertiary-bg) !important;
+      border-color: var(--bs-border-color-translucent) !important;
+    }
+  </style>
+</head>
+<body class="ef-panel-body">
+
+  <div id="navbar-container"></div>
+
+<main class="ef-panel-main">
+  <div class="container-fluid px-4">
+    <div class="ef-page-header">
+      <h1 class="ef-page-title">Chat con estudiantes</h1>
+      <a href="/vistas/gestor/vista-gestion-centro.html" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left me-1"></i> Volver
+      </a>
+    </div>
+    <div id="recuadroAlert" class="alert alert-danger d-none mb-3"></div>
+    
+    <div class="card" id="chatCard">
+      <div class="row g-0 h-100">
+
+        <!-- Panel izquierdo: lista conversaciones y filtro -->
+        <div class="col-md-4 border-end h-100 d-flex flex-column" id="panelIzquierdo">
+          <div class="p-2">
+            <select id="filtroFormacion" class="form-select form-select-sm">
+              <option value="">Todas las formaciones</option>
+            </select>
+          </div>
+          <div class="overflow-y-auto flex-grow-1 d-flex flex-column" id="listaConversaciones">
+          </div>
+        </div>
+
+        <!-- Panel derecho: mensajes -->
+        <div class="col-md-8 d-flex flex-column" id="panelMensajes">
+          <div class="position-absolute top-50 start-50 translate-middle text-muted text-center d-none" id="placeholderChat" style="pointer-events:none;">
+            <i class="bi bi-chat-dots fs-1 d-block mb-2 opacity-25"></i>
+            <span class="small">Selecciona una conversación</span>
+          </div>
+          
+          <div id="cabeceraConversacion" class="d-none px-3 py-2 border-bottom">
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+              <span id="cabeceraEstudiante" class="fw-semibold"></span>
+              <div id="cabeceraFormaciones" class="d-flex flex-wrap gap-1"></div>
+            </div>
+          </div>
+          
+          <div id="contenedorMensajes" class="flex-grow-1 overflow-y-auto p-3 d-none"></div>
+          
+          <div id="formularioMensaje" class="p-3 border-top d-none">
+            <form id="formEnviar" class="d-flex gap-2">
+              <input id="inputMensaje" class="form-control" type="text" placeholder="Escribe una respuesta..." required maxlength="2000" autocomplete="off">
+              <button type="submit" class="btn btn-primary px-3"><i class="bi bi-send"></i></button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="footer-container"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+<script src="/js/comun/ws-client.js"></script>
+<script src="/js/comun/confirm-modal.js"></script>
+<script src="/js/comun/navbar.js"></script>
+<script src="/js/comun/footer.js"></script>
+<script src="/js/gestor/chatGestor.js"></script>
+</body>
+</html>

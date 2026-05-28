@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Iniciar sesión - EncuentraFormación</title>
+    <script src="/js/comun/theme.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" integrity="sha384-XGjxtQfXaH2tnPFa9x+ruJTuLE3Aa6LhHSWRr1XeTyhezb4abCG4ccI5AkVDxqC+" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/components.css">
+</head>
+
+<body class="ef-auth-body">
+
+    <div class="ef-theme-float">
+        <button id="themeToggle" class="ef-btn-icon" title="Cambiar a modo oscuro">
+            <i id="themeIcon" class="bi bi-moon-fill"></i>
+        </button>
+    </div>
+
+    <div class="ef-auth-wrapper">
+        <div class="ef-auth-card">
+
+            <div class="ef-auth-header">
+                <div class="ef-logo-mark">EF</div>
+                <h1 class="ef-auth-title">Iniciar sesión</h1>
+                <p class="ef-auth-tagline">Accede a tu cuenta de EncuentraFormación</p>
+            </div>
+
+            <div id="loginAlertError" class="alert alert-danger d-none d-flex align-items-center gap-2 mb-3" role="alert"></div>
+            <div id="logoutAlert" class="alert alert-success alert-dismissible d-none mb-3" role="alert">
+                <span>Has cerrado sesión correctamente.</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            </div>
+            <div id="requiereLoginAlert" class="alert alert-info alert-dismissible d-none mb-3" role="alert">
+                <i class="bi bi-stars me-2"></i><span>Inicia sesión para usar el <strong>Orientador IA Personalizado</strong>.</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            </div>
+            <div id="guardarFormacionAlert" class="alert alert-info alert-dismissible d-none mb-3" role="alert">
+                <i class="bi bi-bookmark me-2"></i><span>Inicia sesión para poder <strong>guardar formaciones</strong> y acceder a tu lista de guardadas.</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            </div>
+            <div id="contactarCentroAlert" class="alert alert-info alert-dismissible d-none mb-3" role="alert">
+                <i class="bi bi-chat-dots-fill me-2"></i><span>Inicia sesión como estudiante para poder <strong>contactar con centros</strong>.</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            </div>
+            <div id="solicitarAdmisionAlert" class="alert alert-info alert-dismissible d-none mb-3" role="alert">
+                <i class="bi bi-send-fill me-2"></i><span>Inicia sesión como estudiante para poder enviar <strong>solicitudes de admisión</strong>.</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            </div>
+            <div id="infoAlert" class="alert alert-success alert-dismissible d-none mb-3" role="alert">
+                <i class="bi bi-check-circle me-2"></i><span id="infoAlertText"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            </div>
+
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Correo electrónico</label>
+                    <!--
+                        El campo se llama "username" porque así lo espera Spring Security,
+                        pero el valor que introduce el usuario es su email.
+                        CustomUserDetailsService busca en la BD por email.
+                    -->
+                    <input type="email" class="form-control" id="username" name="username"
+                        placeholder="ejemplo@email.com" required autofocus>
+                </div>
+
+                <div class="mb-4">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="password" name="password"
+                            placeholder="Escribe aquí tu contraseña" required>
+                        <button type="button" class="ef-toggle-password" id="togglePassword"
+                                tabindex="-1" title="Mostrar/ocultar contraseña">
+                            <i class="bi bi-eye" id="togglePasswordIcon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-lg" id="btnLogin">Acceder</button>
+                </div>
+            </form>
+
+            <div class="ef-divider">o</div>
+
+            <div class="text-center ef-fs-sm">
+                <span class="ef-color-secondary">¿Aún no tienes cuenta? </span>
+                <a href="/vistas/auth/elegir-tipo-cuenta.html" class="fw-semibold">Regístrate aquí</a>
+            </div>
+
+            <div class="text-center mt-3">
+                <a href="/" class="text-decoration-none ef-text-hint">
+                    &larr; Volver al inicio
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="/js/comun/utils.js"></script>
+    <script src="/js/auth/login.js"></script>
+    <script src="/js/comun/logout.js"></script>
+</body>
+
+</html>

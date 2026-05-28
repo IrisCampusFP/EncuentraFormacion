@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EncuentraFormación</title>
+    <script src="/js/comun/theme.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" integrity="sha384-XGjxtQfXaH2tnPFa9x+ruJTuLE3Aa6LhHSWRr1XeTyhezb4abCG4ccI5AkVDxqC+" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/components.css">
+</head>
+
+<body class="ef-panel-body">
+
+    <!-- navbar.js inyecta aquí el navbar adaptativo según el rol del usuario -->
+    <div id="navbar-container"></div>
+
+    <!-- Hero Premium Adaptativo -->
+    <header class="ef-hero">
+        <div class="container py-3">
+            <h1 class="ef-hero-title">Encuentra tu próxima formación</h1>
+            <p class="ef-hero-subtitle">Toda la formación en un solo lugar. Elige tu camino hacia el éxito profesional.</p>
+        </div>
+    </header>
+
+    <!-- Buscador -->
+    <section class="container my-5">
+        <form id="formBuscador" class="card p-4 ef-form-buscador">
+
+            <!-- Fila 1: nombre + título oficial + tipo de estudios -->
+            <div class="row g-3 align-items-end">
+                <div class="col-12 col-md-3">
+                    <label class="form-label fw-semibold small text-muted">Nombre</label>
+                    <input type="text" id="filtroNombre" class="form-control"
+                           placeholder="Ej: Administración de Sistemas...">
+                </div>
+                <div class="col-12 col-md-6">
+                    <label class="form-label fw-semibold small text-muted">Título oficial</label>
+                    <div class="ef-combobox position-relative" id="comboTitulo">
+                        <div class="ef-combobox-wrap d-flex align-items-center" id="comboTituloWrap">
+                            <input type="text" id="comboTituloInput" class="form-control"
+                                   placeholder="Ej: Técnico Superior en..." autocomplete="off">
+                            <button type="button" class="ef-combobox-clear d-none" id="comboTitulo-clear"
+                                    title="Quitar filtro de título oficial">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
+                        </div>
+                        <ul class="ef-combobox-dropdown d-none" id="comboTituloLista"></ul>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label class="form-label fw-semibold small text-muted">Tipo de estudios</label>
+                    <select id="filtroTipoEstudios" class="form-select">
+                        <option value="">Todos</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Fila 2: provincia + localidad + tipo de centro + modalidad -->
+            <div class="row g-3 align-items-end mt-1">
+                <div class="col-12 col-md-3">
+                    <label class="form-label fw-semibold small text-muted">Provincia</label>
+                    <div class="ef-combobox position-relative" id="comboProvincia">
+                        <div class="ef-combobox-wrap d-flex align-items-center" id="comboProvinciaWrap">
+                            <input type="text" id="comboProvinciaInput" class="form-control"
+                                   placeholder="Buscar provincia..." autocomplete="off">
+                            <button type="button" class="ef-combobox-clear d-none" id="comboProvincia-clear"
+                                    title="Quitar filtro de provincia">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
+                        </div>
+                        <ul class="ef-combobox-dropdown d-none" id="comboProvinciaLista"></ul>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label class="form-label fw-semibold small text-muted">Localidad</label>
+                    <input type="text" id="filtroLocalidad" class="form-control" placeholder="Ej: Madrid">
+                </div>
+                <div class="col-12 col-md-3">
+                    <label class="form-label fw-semibold small text-muted">Tipo de centro</label>
+                    <select id="filtroTipoCentro" class="form-select">
+                        <option value="">Todos</option>
+                        <option value="PUBLICO">Público</option>
+                        <option value="PRIVADO">Privado</option>
+                        <option value="CONCERTADO">Concertado</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label class="form-label fw-semibold small text-muted">Modalidad</label>
+                    <select id="filtroModalidad" class="form-select">
+                        <option value="">Todas</option>
+                        <option value="PRESENCIAL">Presencial</option>
+                        <option value="SEMIPRESENCIAL">Semipresencial</option>
+                        <option value="DISTANCIA">A distancia</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Fila 3: horario + fecha + precio + botones -->
+            <div class="row g-3 align-items-end mt-1">
+                <div class="col-12 col-md-2">
+                    <label class="form-label fw-semibold small text-muted">Horario</label>
+                    <select id="filtroHorario" class="form-select">
+                        <option value="">Cualquiera</option>
+                        <option value="MANANA">Mañana</option>
+                        <option value="TARDE">Tarde</option>
+                        <option value="NOCHE">Noche</option>
+                        <option value="FLEXIBLE">Flexible</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-2">
+                    <label class="form-label fw-semibold small text-muted">Inicio desde</label>
+                    <input type="date" id="filtroFechaInicio" class="form-control">
+                </div>
+                <div class="col-12 col-md-4">
+                    <label class="form-label fw-semibold small text-muted mb-1">
+                        Precio máx.:&nbsp;<span id="precioLabel" class="fw-semibold text-gradient-primary">Sin límite</span>
+                    </label>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="text-muted ef-filtro-precio-label">Gratis</span>
+                        <input type="range" class="form-range flex-grow-1 mb-0" id="filtroPrecio"
+                               min="0" max="200" step="1" value="200" class="form-range flex-grow-1 mb-0 ef-filtro-precio-range">
+                        <input type="number" id="filtroPrecioInput" class="form-control form-control-sm"
+                               min="0" step="50" placeholder="∞"
+                               class="form-control form-control-sm ef-filtro-precio-input">
+                    </div>
+                </div>
+                <div class="col-12 col-md-2">
+                    <button type="submit" class="btn btn-gradient-accent w-100 fw-bold">
+                        <i class="bi bi-search me-1"></i> Buscar
+                    </button>
+                </div>
+                <div class="col-12 col-md-2">
+                    <button type="button" class="btn btn-outline-secondary w-100" id="btnLimpiarFiltros">
+                        <i class="bi bi-x-circle me-1"></i> Limpiar filtros
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </section>
+
+    <!-- Barra de ordenamiento -->
+    <section class="container mb-3">
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+            <span class="small text-muted fw-medium me-1">Ordenar:</span>
+            <button type="button" class="btn btn-sm btn-outline-secondary sort-pill" data-sort="recientes">
+                <i class="bi bi-clock-history me-1"></i>Más recientes
+            </button>
+            <button type="button" class="btn btn-sm btn-primary sort-pill" data-sort="valoracion">
+                <i class="bi bi-star-fill me-1"></i>Mejor valoradas
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary sort-pill" data-sort="precioAsc">
+                <i class="bi bi-currency-euro me-1"></i>Precio <span class="sort-dir">↑</span>
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary sort-pill" data-sort="proximasFechas">
+                <i class="bi bi-calendar-event me-1"></i>Próximas fechas
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary sort-pill" data-sort="az" id="pillAZ">
+                <i class="bi bi-sort-alpha-down me-1"></i>A–Z
+            </button>
+        </div>
+    </section>
+
+    <!-- Resultados -->
+    <section class="container mb-5 flex-grow-1">
+        <p id="totalResultados" class="text-muted small mb-3 fw-medium"></p>
+        <div id="spinner" class="text-center py-5 d-none">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando...</span>
+            </div>
+        </div>
+        <div id="resultados" class="row g-4"></div>
+        <div id="paginacion" class="mt-5"></div>
+    </section>
+
+    <div id="footer-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="/js/comun/navbar.js"></script>
+    <script src="/js/comun/footer.js"></script>
+    <script src="/js/comun/utils.js"></script>
+    <script src="/js/publico/buscador.js"></script>
+</body>
+</html>

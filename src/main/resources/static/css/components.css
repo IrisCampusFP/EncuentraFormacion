@@ -1,0 +1,2365 @@
+/* Componentes reutilizables de la interfaz:
+   navbar, layouts de auth y panel, botones custom,
+   cards de menú y compatibilidad con las clases que genera el JS. */
+
+
+/* is-invalid dentro de input-group: propaga el borde rojo al input aunque no sea el último hijo */
+.input-group .form-control.is-invalid {
+  border-color: var(--bs-form-invalid-border-color);
+  z-index: 1;
+}
+
+/* Toggle contraseña: integrado visualmente con el input-group */
+.ef-toggle-password {
+  display: flex;
+  align-items: center;
+  padding: 0 0.75rem;
+  background-color: var(--bs-body-bg);
+  border: 1px solid var(--ef-border);
+  border-left: 0;
+  border-radius: 0 var(--bs-border-radius) var(--bs-border-radius) 0;
+  color: var(--bs-secondary-color);
+  cursor: pointer;
+  transition: color var(--ef-transition);
+}
+.ef-toggle-password:hover {
+  color: var(--bs-body-color);
+}
+.ef-toggle-password:focus {
+  outline: none;
+}
+[data-bs-theme="dark"] .ef-toggle-password {
+  background-color: #0B1120;
+  border-color: #2F394A;
+}
+
+/* Botón aceptar solicitud — verde oscuro profesional */
+.btn-ef-accept {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #15803D;        /* Green 700 */
+  --bs-btn-border-color: #15803D;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #166534;  /* Green 800 */
+  --bs-btn-hover-border-color: #14532D;
+  --bs-btn-active-bg: #14532D; /* Green 900 */
+  --bs-btn-active-border-color: #14532D;
+  --bs-btn-focus-shadow-rgb: 21, 128, 61;
+}
+
+[data-bs-theme="dark"] .btn-ef-accept {
+  --bs-btn-bg: #16A34A;        /* Green 600 — más luminoso sobre fondos oscuros */
+  --bs-btn-border-color: #16A34A;
+  --bs-btn-hover-bg: #15803D;  /* Green 700 */
+  --bs-btn-hover-border-color: #15803D;
+  --bs-btn-active-bg: #166534; /* Green 800 */
+  --bs-btn-active-border-color: #166534;
+}
+
+
+/* Navbar superior fija */
+.ef-navbar {
+  position: sticky;
+  top: 0;
+  background-color: var(--ef-navbar-bg);
+  border-bottom: 1px solid var(--ef-navbar-border);
+  min-height: 60px;
+  box-shadow: var(--ef-shadow-xs);
+  z-index: 1030;
+}
+
+/* Logo + nombre en la navbar */
+.ef-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: var(--ef-text-primary);
+  font-weight: 600;
+}
+
+.ef-brand:hover {
+  color: var(--ef-primary);
+  text-decoration: none;
+}
+
+/* Cuadrado de color con las iniciales "EF" */
+.ef-brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  background-color: var(--ef-primary);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border-radius: var(--ef-radius-sm);
+  flex-shrink: 0;
+}
+
+.ef-brand-name {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Botones pequeños de icono (toggle de tema, logout en navbar) */
+.ef-btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1.5px solid var(--ef-border-strong);
+  border-radius: 8px;
+  background-color: transparent; 
+  color: var(--ef-text-secondary);
+  font-size: 0.95rem;
+  transition: all var(--ef-transition);
+  cursor: pointer;
+}
+
+.ef-btn-icon:hover {
+  background-color: var(--ef-surface-alt);
+  color: var(--ef-text-primary);
+  border-color: var(--ef-border-strong);
+}
+
+/* Pill con el nombre del usuario en la navbar */
+.ef-user-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.75rem;
+  background-color: var(--ef-surface-alt);
+  border: 1px solid var(--ef-border);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ef-text-secondary);
+  white-space: nowrap;
+}
+
+/* Botón de usuario en la navbar con dropdown (nombre + flecha) */
+.ef-user-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.75rem;
+  background-color: var(--ef-surface-alt);
+  border: 1px solid var(--ef-border);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ef-text-secondary);
+  white-space: nowrap;
+  transition: all var(--ef-transition);
+}
+
+.ef-user-btn:hover,
+.ef-user-btn.show {
+  background-color: var(--ef-primary-light);
+  border-color: var(--ef-primary);
+  color: var(--ef-primary);
+}
+
+[data-bs-theme="dark"] .ef-user-btn:hover,
+[data-bs-theme="dark"] .ef-user-btn.show {
+  background-color: rgba(37, 99, 235, 0.15);
+  border-color: rgba(37, 99, 235, 0.4);
+  color: #93C5FD;
+}
+
+/* Separador vertical entre bloques de rol en la navbar */
+.ef-navbar-divider {
+  display: inline-block;
+  width: 1px;
+  height: 1.25rem;
+  background-color: var(--ef-border-strong);
+  opacity: 1;
+  vertical-align: middle;
+}
+
+/* Botón de contexto activo para usuarios con doble rol (GESTOR + ESTUDIANTE) */
+.ef-panel-toggle {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--ef-navbar-text);
+  font-size: 0.8rem;
+  white-space: nowrap;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.ef-panel-toggle:hover,
+.ef-panel-toggle:focus-visible {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: var(--ef-navbar-text);
+}
+
+
+/* Layout para las páginas de panel (admin, gestor, estudiante) */
+.ef-panel-body {
+  background-color: var(--ef-bg);
+}
+
+.ef-panel-main {
+  flex: 1;
+  padding-top: 1.75rem;
+  padding-bottom: 3rem;
+}
+
+/* Cabecera de cada página dentro del panel */
+.ef-page-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.ef-page-title {
+  font-size: 1.375rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.ef-page-subtitle {
+  font-size: 0.9rem;
+  color: var(--ef-text-secondary);
+  margin: 0.15rem 0 0;
+}
+
+
+/* Layout para las páginas de autenticación (login, registro, etc.)
+   El contenido se centra vertical y horizontalmente. */
+.ef-auth-body {
+  background-color: var(--ef-bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  position: relative;
+}
+
+/* Botón flotante del toggle de tema en páginas de auth (esquina superior derecha) */
+.ef-theme-float {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 100;
+}
+
+.ef-auth-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+/* Tarjeta blanca centrada que contiene el formulario */
+.ef-auth-card {
+  background-color: var(--ef-surface);
+  border: 1px solid var(--ef-border);
+  border-radius: var(--ef-radius-xl);
+  box-shadow: var(--ef-shadow-md);
+  padding: 2.25rem 2.5rem;
+  width: 100%;
+  max-width: 480px;
+}
+
+/* Versión más ancha para formularios con más campos (registro gestor, centro) */
+.ef-auth-card--wide {
+  max-width: 700px;
+}
+
+/* Cabecera de las páginas de auth con el logo y el título */
+.ef-auth-header {
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.ef-logo-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background-color: var(--ef-primary);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: var(--ef-radius);
+  margin-bottom: 0.75rem;
+}
+
+.ef-auth-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ef-text-primary);
+  margin: 0 0 0.25rem;
+}
+
+.ef-auth-tagline {
+  font-size: 0.875rem;
+  color: var(--ef-text-muted);
+  margin: 0;
+}
+
+/* Subtítulo de sección dentro de formularios largos */
+.ef-section-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ef-text-muted);
+  margin: 1.5rem 0 1rem;
+}
+
+/* Separador "o" entre opciones */
+.ef-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.25rem 0;
+  color: var(--ef-text-muted);
+  font-size: 0.825rem;
+}
+
+.ef-divider::before,
+.ef-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background-color: var(--ef-border);
+}
+
+
+/* Cards de navegación para los menús de panel (menuAdmin, etc.).
+   Al hacer hover suben ligeramente y resaltan el borde. */
+.ef-nav-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.5rem;
+  background-color: var(--ef-surface);
+  border: 1px solid var(--ef-border);
+  border-radius: var(--ef-radius-lg);
+  text-decoration: none;
+  color: var(--ef-text-primary);
+  transition: all var(--ef-transition-md);
+  height: 100%;
+  box-shadow: var(--ef-shadow-xs);
+}
+
+.ef-nav-card:hover {
+  border-color: var(--ef-primary);
+  box-shadow: var(--ef-shadow-md);
+  transform: translateY(-2px);
+  text-decoration: none;
+  color: var(--ef-text-primary);
+}
+
+/* Icono dentro de la card de navegación */
+.ef-nav-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--ef-radius);
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  flex-shrink: 0;
+}
+
+/* Colores de fondo del icono según la sección */
+.ef-nav-card-icon--blue  { background-color: var(--ef-primary-subtle); color: var(--ef-primary); }
+.ef-nav-card-icon--indigo { background-color: var(--ef-accent-subtle); color: var(--ef-accent); }
+.ef-nav-card-icon--teal  { background-color: var(--ef-success-subtle); color: var(--ef-success); }
+.ef-nav-card-icon--green { background-color: var(--ef-success-subtle); color: var(--ef-success); }
+.ef-nav-card-icon--amber { background-color: var(--ef-warning-subtle); color: var(--ef-warning); }
+.ef-nav-card-icon--red   { background-color: var(--ef-danger-subtle);  color: var(--ef-danger); }
+
+.ef-nav-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+}
+
+.ef-nav-card-desc {
+  font-size: 0.85rem;
+  color: var(--ef-text-secondary);
+  margin: 0;
+}
+
+/* --- BUSCADOR (CSP Safe) --- */
+.ef-form-buscador {
+  background-color: var(--ef-surface);
+  box-shadow: var(--ef-shadow-lg);
+  border-radius: var(--ef-radius-xl);
+  margin-top: -5.5rem;
+  z-index: 10;
+  position: relative;
+  overflow: visible;
+}
+
+.ef-filtro-precio-label {
+  font-size: 0.65rem;
+  white-space: nowrap;
+}
+
+.ef-filtro-precio-range {
+  margin-top: 2px;
+}
+
+.ef-filtro-precio-input {
+  width: 72px;
+  text-align: right;
+}
+
+.ef-text-primary-link {
+  color: var(--ef-primary);
+}
+
+/* --- UTILIDADES CSP-SAFE (Reemplazo de inline styles) --- */
+.ef-color-primary { color: var(--ef-primary); }
+.ef-color-danger { color: var(--ef-danger); }
+.ef-color-warning { color: var(--ef-warning); }
+.ef-color-success { color: var(--ef-success); }
+.ef-color-info { color: #0284C7; } /* Sky Blue 600 */
+.ef-color-accent { color: var(--ef-accent); }
+.ef-color-muted { color: var(--ef-text-muted); }
+.ef-color-secondary { color: var(--ef-text-secondary); }
+
+.ef-max-w-540 { max-width: 540px; }
+.ef-max-w-120 { max-width: 120px; }
+.ef-max-h-60vh { max-height: 60vh; }
+
+.ef-fs-sm { font-size: 0.875rem; }
+.ef-fs-xs { font-size: 0.8rem; }
+.ef-fs-xxs { font-size: 0.7rem; }
+.ef-fs-md { font-size: 0.9rem; }
+.ef-fs-lg { font-size: 1.05rem; }
+.ef-fs-xl { font-size: 2rem; }
+
+.ef-fw-500 { font-weight: 500; }
+.ef-line-height-13 { line-height: 1.3; }
+.ef-line-height-16 { line-height: 1.6; }
+.ef-line-height-175 { line-height: 1.75; }
+
+.ef-card-hover-pointer {
+  cursor: pointer;
+}
+
+.ef-card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ef-card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+}
+
+.ef-list-card-hover {
+  transition: background-color 0.15s ease, border-left-color 0.15s ease;
+  border-left: 3px solid transparent !important;
+}
+
+.ef-list-card-hover:hover {
+  background-color: var(--ef-surface-2, #f8f9fa) !important;
+  border-left-color: var(--ef-primary) !important;
+}
+
+[data-bs-theme="dark"] .ef-list-card-hover:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+[data-bs-theme="dark"] .ef-card-hover {
+  background-color: #0F172A;
+}
+
+.ef-badge-custom {
+  font-weight: 500;
+  font-size: 0.7rem;
+  padding: 0.3em 0.6em;
+  border-radius: 0.375rem;
+}
+
+.ef-badge-detail {
+  font-size: 0.9rem !important;
+  padding-left: 0.35em !important;
+  padding-right: 0.35em !important;
+  margin-left: 0.3em !important;
+}
+
+.ef-badge-custom-sm {
+  font-weight: 600;
+  font-size: 0.7rem;
+  padding: 0.25em 0.6em;
+  border-radius: 0.375rem;
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.ef-sticky-top-2rem {
+  top: 2rem;
+}
+
+.ef-stat-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.ef-arrow-fix {
+  position: relative;
+  top: 1px;
+}
+
+/* --- COLORES BADGES (CSP Safe) --- */
+.ef-badge-presencial    { background-color: #EEF2FF; color: #4338CA; }
+.ef-badge-semipresencial{ background-color: #F5F3FF; color: #6D28D9; }
+.ef-badge-distancia     { background-color: #F1F5F9; color: #475569; }
+.ef-badge-grado-sup     { background-color: #F0FDF4; color: #15803D; }
+.ef-badge-grado-med     { background-color: #FEFCE8; color: #A16207; }
+.ef-badge-espec         { background-color: #ECFEFF; color: #0E7490; }
+.ef-badge-cert          { background-color: #FDF2F8; color: #BE185D; }
+.ef-badge-default       { background-color: #F8FAFC; color: #475569; }
+.ef-badge-publico       { background-color: #EFF6FF; color: #1D4ED8; }
+.ef-badge-privado       { background-color: #FFF1F2; color: #BE123C; }
+.ef-badge-concertado    { background-color: #FEF2F2; color: #B91C1C; }
+/* Tipos de estudios (m_tipo_estudios) */
+.ef-badge-infantil      { background-color: #FFF7ED; color: #C2410C; }
+.ef-badge-primaria      { background-color: #FFF1F2; color: #BE123C; }
+.ef-badge-eso           { background-color: #ECFDF5; color: #059669; }
+.ef-badge-bachillerato  { background-color: #E0F2FE; color: #0284C7; }
+.ef-badge-fp-basica     { background-color: #FEFCE8; color: #854D0E; }
+.ef-badge-idiomas       { background-color: #F0FDFA; color: #0F766E; }
+.ef-badge-artes         { background-color: #FDF4FF; color: #86198F; }
+.ef-badge-deportes      { background-color: #F0FDF4; color: #166534; }
+.ef-badge-adultos       { background-color: #F8FAFC; color: #334155; }
+.ef-badge-curso         { background-color: #FFF7ED; color: #9A3412; }
+.ef-badge-cert-prof     { background-color: #FEF9C3; color: #713F12; }
+.ef-badge-universidad   { background-color: #FAF5FF; color: #9333EA; }
+.ef-badge-master-oficial{ background-color: #F0FDFA; color: #115E59; }
+.ef-badge-master        { background-color: #ECFEFF; color: #0E7490; }
+.ef-badge-doctorado     { background-color: #FAF5FF; color: #6B21A8; }
+/* --- COLORES BADGES — MODO OSCURO --- */
+[data-bs-theme="dark"] .ef-badge-presencial    { background-color: rgba(67, 56, 202, 0.18);  color: #A5B4FC; }
+[data-bs-theme="dark"] .ef-badge-semipresencial{ background-color: rgba(109, 40, 217, 0.18); color: #C4B5FD; }
+[data-bs-theme="dark"] .ef-badge-distancia     { background-color: rgba(71, 85, 105, 0.22);  color: #94A3B8; }
+[data-bs-theme="dark"] .ef-badge-grado-sup     { background-color: rgba(21, 128, 61, 0.18);  color: #86EFAC; }
+[data-bs-theme="dark"] .ef-badge-grado-med     { background-color: rgba(161, 98, 7, 0.18);   color: #FCD34D; }
+[data-bs-theme="dark"] .ef-badge-espec         { background-color: rgba(14, 116, 144, 0.18); color: #67E8F9; }
+[data-bs-theme="dark"] .ef-badge-cert          { background-color: rgba(190, 24, 93, 0.18);  color: #F9A8D4; }
+[data-bs-theme="dark"] .ef-badge-default       { background-color: rgba(71, 85, 105, 0.18);  color: #94A3B8; }
+[data-bs-theme="dark"] .ef-badge-publico       { background-color: rgba(29, 78, 216, 0.18);  color: #93C5FD; }
+[data-bs-theme="dark"] .ef-badge-privado       { background-color: rgba(190, 18, 60, 0.18);  color: #FDA4AF; }
+[data-bs-theme="dark"] .ef-badge-concertado    { background-color: rgba(185, 28, 28, 0.18);  color: #FCA5A5; }
+[data-bs-theme="dark"] .ef-badge-infantil      { background-color: rgba(194, 65, 12, 0.18);  color: #FDBA74; }
+[data-bs-theme="dark"] .ef-badge-primaria      { background-color: rgba(190, 18, 60, 0.18);  color: #FDA4AF; }
+[data-bs-theme="dark"] .ef-badge-eso           { background-color: rgba(5, 150, 105, 0.18);   color: #6EE7B7; }
+[data-bs-theme="dark"] .ef-badge-bachillerato  { background-color: rgba(2, 132, 199, 0.18);   color: #7DD3FC; }
+[data-bs-theme="dark"] .ef-badge-fp-basica     { background-color: rgba(133, 77, 14, 0.18);  color: #FCD34D; }
+[data-bs-theme="dark"] .ef-badge-idiomas       { background-color: rgba(15, 118, 110, 0.18); color: #5EEAD4; }
+[data-bs-theme="dark"] .ef-badge-artes         { background-color: rgba(134, 25, 143, 0.18); color: #E879F9; }
+[data-bs-theme="dark"] .ef-badge-deportes      { background-color: rgba(22, 101, 52, 0.22);  color: #86EFAC; }
+[data-bs-theme="dark"] .ef-badge-adultos       { background-color: rgba(51, 65, 85, 0.22);   color: #94A3B8; }
+[data-bs-theme="dark"] .ef-badge-curso         { background-color: rgba(154, 52, 18, 0.18);  color: #FDBA74; }
+[data-bs-theme="dark"] .ef-badge-cert-prof     { background-color: rgba(113, 63, 18, 0.18);  color: #FDE68A; }
+[data-bs-theme="dark"] .ef-badge-universidad   { background-color: rgba(147, 51, 234, 0.18); color: #C084FC; }
+[data-bs-theme="dark"] .ef-badge-master-oficial{ background-color: rgba(17, 94, 89, 0.22);   color: #5EEAD4; }
+[data-bs-theme="dark"] .ef-badge-master        { background-color: rgba(14, 116, 144, 0.18); color: #67E8F9; }
+[data-bs-theme="dark"] .ef-badge-doctorado     { background-color: rgba(107, 33, 168, 0.18); color: #D8B4FE; }
+/* --- HERO COMPONENT --- */
+.ef-hero {
+  position: relative;
+  padding: 4rem 0 6rem 0; /* Espacio extra abajo para el buscador flotante */
+  text-align: center;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+[data-bs-theme="light"] .ef-hero {
+  /* Gradiente un poco más presente para que no pase desapercibido, pero manteniendo la suavidad */
+  background: linear-gradient(135deg, #F0F7FF 0%, #E0E7FF 100%); 
+  color: var(--ef-text-primary);
+  border-bottom: 1px solid var(--ef-border);
+}
+
+[data-bs-theme="dark"] .ef-hero {
+  /* Gradiente premium marca en modo oscuro */
+  background: linear-gradient(135deg, var(--ef-primary) 0%, var(--ef-accent) 100%);
+  color: #FFFFFF;
+}
+
+.ef-hero-title {
+  font-size: 2.75rem;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+[data-bs-theme="light"] .ef-hero-title {
+  /* En modo claro, un degradado sutil en el texto queda muy profesional */
+  background: linear-gradient(135deg, var(--ef-primary) 0%, var(--ef-accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ef-hero-subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+[data-bs-theme="light"] .ef-hero-subtitle {
+  color: var(--ef-text-secondary);
+}
+
+
+/* Campos clickables que genera el JS en las tablas del admin */
+.campo-clickable {
+  cursor: pointer;
+  color: var(--ef-primary);
+  font-size: 0.875rem;
+  transition: opacity var(--ef-transition);
+}
+
+.campo-clickable:hover {
+  opacity: 0.75;
+  text-decoration: underline;
+}
+
+/* ============================================================
+   DIALOGS DE DETALLE — campo etiqueta/valor
+   ============================================================ */
+
+/* Encabezado de sección: color primario tenue, borde inferior visible */
+.detalle-seccion {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ef-primary);
+  opacity: 0.8;
+  padding-bottom: 0.6rem;
+  border-bottom: 1.5px solid var(--ef-border);
+  margin: 0;
+}
+
+/* Separación mayor entre secciones: el col-12 que envuelve una sección
+   (excepto el primero del grid) recibe padding-top extra para separar el grupo */
+.row.g-4 > .col-12:not(:first-child):has(.detalle-seccion) {
+  padding-top: calc(var(--bs-gutter-y, 1.5rem) + 0.75rem);
+}
+
+/* Contenedor individual campo (etiqueta + valor apilados) */
+.detalle-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+/* Etiqueta del campo: discreta, definitivamente más pequeña que el valor */
+.detalle-etiqueta {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--ef-text-muted);
+  line-height: 1.2;
+}
+
+/* Valor del campo: legible, tamaño cómodo */
+.detalle-valor {
+  font-size: 0.925rem;
+  color: var(--ef-text-primary);
+  font-weight: 400;
+  line-height: 1.45;
+  word-break: break-word;
+  min-height: 1.4em; /* evita que campos vacíos colapsen la alineación */
+}
+
+/* Lista de gestores en dialog de detalle de centro y dialog de gestores */
+.ef-gestores-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ef-gestor-item {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.75rem 1rem;
+  background: var(--ef-surface-alt);
+  border: 1px solid var(--ef-border);
+  border-radius: var(--ef-radius-md);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 80ms ease, background 80ms ease;
+}
+
+.ef-gestor-item:hover {
+  border-color: var(--ef-primary);
+  background: var(--ef-primary-light);
+  color: inherit;
+  text-decoration: none;
+}
+
+.ef-gestor-item:hover .ef-gestor-arrow {
+  color: var(--ef-primary);
+  opacity: 1;
+}
+
+.ef-gestor-avatar {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: var(--ef-primary-subtle);
+  color: var(--ef-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+
+.ef-gestor-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.ef-gestor-nombre {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ef-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ef-gestor-email {
+  font-size: 0.775rem;
+  color: var(--ef-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ef-gestor-arrow {
+  font-size: 1rem;
+  color: var(--ef-border-strong);
+  opacity: 0.5;
+  flex-shrink: 0;
+  transition: color var(--ef-transition), opacity var(--ef-transition);
+}
+
+.ef-gestor-enlace {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--ef-transition);
+}
+
+.ef-gestor-enlace:hover {
+  color: var(--ef-primary-hover);
+  text-decoration: none;
+}
+
+/* Tabla más compacta (el JS usa esta clase en las tablas del admin) */
+.table.tablaSmall th,
+.table.tablaSmall td {
+  padding: 0.35rem 0.5rem;
+  font-size: 0.8125rem;
+  vertical-align: middle;
+}
+
+/* Asterisco de campo obligatorio */
+.text-required {
+  color: var(--ef-danger);
+  font-weight: 600;
+}
+
+/* Número grande en las páginas de error */
+.ef-error-code {
+  font-size: 6rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--ef-primary);
+}
+
+/* Input de tipo file adaptado al tema */
+input[type="file"].form-control::file-selector-button {
+  background-color: var(--ef-surface-alt);
+  color: var(--ef-text-primary);
+  border: none;
+  border-right: 1px solid var(--ef-border);
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+  transition: background-color var(--ef-transition);
+}
+
+input[type="file"].form-control::file-selector-button:hover {
+  background-color: var(--ef-border);
+}
+
+
+/* Compatibilidad con las clases antiguas que usa el JavaScript.
+   El JS genera botones con estas clases en las tablas y dialogs,
+   así que no se pueden cambiar desde el HTML — solo desde aquí. */
+
+.btn-gradient-primary {
+  background-color: var(--ef-primary);
+  border-color: var(--ef-primary);
+  color: #fff;
+}
+
+.btn-gradient-primary:hover,
+.btn-gradient-primary:focus {
+  background-color: var(--ef-primary-hover);
+  border-color: var(--ef-primary-hover);
+  color: #fff;
+}
+
+.btn-gradient-success {
+  background-color: var(--ef-success);
+  border-color: var(--ef-success);
+  color: #fff;
+}
+
+.btn-gradient-success:hover,
+.btn-gradient-success:focus {
+  background-color: #15803D;
+  border-color: #15803D;
+  color: #fff;
+}
+
+[data-bs-theme="dark"] .btn-gradient-success {
+  background-color: #16A34A;
+  border-color: #16A34A;
+}
+[data-bs-theme="dark"] .btn-gradient-success:hover,
+[data-bs-theme="dark"] .btn-gradient-success:focus {
+  background-color: #15803D;
+  border-color: #15803D;
+}
+
+.btn-outline-gradient-primary {
+  background-color: transparent;
+  border: 1px solid var(--ef-primary);
+  color: var(--ef-primary);
+}
+
+.btn-outline-gradient-primary:hover,
+.btn-outline-gradient-primary:focus {
+  background-color: var(--ef-primary-subtle);
+  border-color: var(--ef-primary);
+  color: var(--ef-primary-hover);
+}
+
+/* Clases de texto que usaba el CSS anterior (el JS puede generarlas) */
+.text-gradient-primary { color: var(--ef-primary); }
+.text-gradient-success { color: var(--ef-success); }
+
+/* Índigo corporativo para la funcionalidad Crear */
+.btn-gradient-create {
+  background-color: var(--ef-create);
+  border-color: var(--ef-create);
+  color: #fff;
+}
+.btn-gradient-create:hover,
+.btn-gradient-create:focus {
+  background-color: var(--ef-create-hover);
+  border-color: var(--ef-create-hover);
+  color: #fff;
+}
+[data-bs-theme="dark"] .btn-gradient-create {
+  background-color: var(--ef-create);
+  border-color: var(--ef-create);
+}
+[data-bs-theme="dark"] .btn-gradient-create:hover,
+[data-bs-theme="dark"] .btn-gradient-create:focus {
+  background-color: var(--ef-create-hover);
+  border-color: var(--ef-create-hover);
+}
+.text-gradient-create { color: var(--ef-create); }
+
+/* Violeta sólido para la funcionalidad Roles */
+.btn-gradient-back {
+  background-color: var(--ef-back);
+  border-color: var(--ef-back);
+  color: #fff;
+}
+.btn-gradient-back:hover,
+.btn-gradient-back:focus {
+  background-color: var(--ef-back-hover);
+  border-color: var(--ef-back-hover);
+  color: #fff;
+}
+[data-bs-theme="dark"] .btn-gradient-back {
+  background-color: var(--ef-back);
+  border-color: var(--ef-back);
+}
+[data-bs-theme="dark"] .btn-gradient-back:hover,
+[data-bs-theme="dark"] .btn-gradient-back:focus {
+  background-color: var(--ef-back-hover);
+  border-color: var(--ef-back-hover);
+}
+.text-gradient-back { color: var(--ef-back); }
+
+/* Violeta outline para botones de navegación / Volver */
+.btn-outline-back {
+  --bs-btn-color:              var(--ef-back);
+  --bs-btn-border-color:       var(--ef-back);
+  --bs-btn-hover-bg:           var(--ef-back-subtle);
+  --bs-btn-hover-border-color: var(--ef-back);
+  --bs-btn-hover-color:        var(--ef-back-hover);
+  --bs-btn-active-bg:          var(--ef-back-subtle);
+  --bs-btn-active-border-color:var(--ef-back);
+  --bs-btn-active-color:       var(--ef-back-hover);
+  --bs-btn-focus-shadow-rgb:   124, 58, 237;
+}
+[data-bs-theme="dark"] .btn-outline-back {
+  --bs-btn-color:              var(--ef-back);
+  --bs-btn-border-color:       var(--ef-back);
+  --bs-btn-hover-bg:           var(--ef-back-subtle);
+  --bs-btn-hover-color:        var(--ef-back-hover);
+  --bs-btn-active-bg:          var(--ef-back-subtle);
+  --bs-btn-active-color:       var(--ef-back-hover);
+  --bs-btn-focus-shadow-rgb:   167, 139, 250;
+}
+
+/* Botones de acción en tabla — evita que el texto baje de línea */
+.ef-btn-accion {
+  white-space: nowrap;
+}
+
+/* Columna ID en tablas de admin: nunca baja de línea, ancho mínimo justo */
+.tablaSmall th:first-child,
+.tablaSmall td:first-child {
+  white-space: nowrap;
+  width: 1%;
+}
+
+/* Icono de búsqueda en barras de filtro: transparente para adaptarse al tema */
+.ef-filter-bar .input-group-text {
+  background-color: transparent;
+  border-color: var(--ef-border);
+}
+
+/* Ancho fijo para el botón Activar/Desactivar — evita que la columna salte al cambiar el texto */
+.ef-btn-estado {
+  width: 6.3rem;
+}
+
+/* Icono con línea diagonal (efecto "tachado") alineado inline con el texto */
+.ef-icon-slash {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+.ef-icon-slash::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -1px;
+  right: -1px;
+  height: 1.5px;
+  background: currentColor;
+  transform: translateY(-50%) rotate(-45deg);
+  border-radius: 1px;
+}
+
+/* Variante sky blue para la funcionalidad Editar */
+.btn-gradient-edit {
+  background-color: var(--ef-edit);
+  border-color: var(--ef-edit);
+  color: #fff;
+}
+.btn-gradient-edit:hover,
+.btn-gradient-edit:focus {
+  background-color: var(--ef-edit-hover);
+  border-color: var(--ef-edit-hover);
+  color: #fff;
+}
+[data-bs-theme="dark"] .btn-gradient-edit {
+  background-color: var(--ef-edit);
+  border-color: var(--ef-edit);
+}
+[data-bs-theme="dark"] .btn-gradient-edit:hover,
+[data-bs-theme="dark"] .btn-gradient-edit:focus {
+  background-color: var(--ef-edit-hover);
+  border-color: var(--ef-edit-hover);
+}
+.text-gradient-edit { color: var(--ef-edit); }
+
+.btn-outline-edit {
+  --bs-btn-color:              var(--ef-edit);
+  --bs-btn-border-color:       var(--ef-edit);
+  --bs-btn-hover-bg:           var(--ef-edit-subtle);
+  --bs-btn-hover-border-color: var(--ef-edit);
+  --bs-btn-hover-color:        var(--ef-edit-hover);
+  --bs-btn-active-bg:          var(--ef-edit-subtle);
+  --bs-btn-active-color:       var(--ef-edit-hover);
+  --bs-btn-focus-shadow-rgb:   2, 132, 199;
+}
+[data-bs-theme="dark"] .btn-outline-edit {
+  --bs-btn-focus-shadow-rgb: 56, 189, 248;
+}
+
+/* Variante teal/acento para acciones secundarias (asignar roles, etc.) */
+.btn-gradient-accent {
+  background-color: var(--ef-accent);
+  border-color: var(--ef-accent);
+  color: var(--ef-text-inverse);
+}
+.btn-gradient-accent:hover,
+.btn-gradient-accent:focus {
+  background-color: var(--ef-accent-hover);
+  border-color: var(--ef-accent-hover);
+  color: var(--ef-text-inverse);
+}
+.text-gradient-accent { color: var(--ef-accent); }
+
+/* Ancho estable para el botón Activar/Desactivar */
+.btn-estado-usuario {
+  min-width: 5.5rem;
+}
+
+/* Tabla de gestión de centros — limita columnas de texto libre para evitar scroll horizontal */
+.tabla-centros th,
+.tabla-centros td {
+  white-space: normal;
+  max-width: 160px;
+  word-break: break-word;
+}
+.tabla-centros td.text-nowrap,
+.tabla-centros th.text-nowrap {
+  white-space: nowrap;
+  max-width: none;
+}
+
+/* --- COMBOBOX (select con búsqueda) --- */
+.ef-combobox-wrap {
+  position: relative;
+}
+
+.ef-combobox-wrap .form-control {
+  padding-right: 2rem;
+}
+
+.ef-combobox-clear {
+  position: absolute;
+  right: 8px;
+  background: none;
+  border: none;
+  padding: 0;
+  line-height: 1;
+  color: var(--ef-text-secondary);
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.ef-combobox-clear:hover {
+  color: var(--ef-danger);
+}
+
+.ef-combobox-dropdown {
+  position: absolute;
+  top: calc(100% + 3px);
+  left: 0;
+  right: 0;
+  background: var(--ef-surface);
+  border: 1px solid var(--ef-border);
+  border-radius: var(--ef-radius-md);
+  box-shadow: var(--ef-shadow-md);
+  max-height: 220px;
+  overflow-y: auto;
+  z-index: 1050;
+  list-style: none;
+  padding: 4px 0;
+  margin: 0;
+}
+
+.ef-combobox-dropdown li {
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: var(--ef-text-primary);
+  transition: background var(--ef-transition);
+}
+
+.ef-combobox-dropdown li:hover {
+  background: var(--ef-primary-light);
+  color: var(--ef-primary);
+}
+
+.ef-combobox-sin-resultados {
+  padding: 10px 14px;
+  font-size: 0.875rem;
+  color: var(--ef-text-secondary);
+  cursor: default;
+}
+
+/* Indicador visual cuando hay una provincia seleccionada */
+.ef-combobox-wrap.seleccionado .form-control {
+  border-color: var(--ef-primary);
+  background-color: var(--ef-primary-light);
+  color: var(--ef-primary);
+  font-weight: 500;
+}
+
+[data-bs-theme="dark"] .ef-combobox-wrap.seleccionado .form-control {
+  background-color: rgba(37, 99, 235, 0.12);
+  color: #93C5FD;
+  border-color: #2563EB;
+}
+
+[data-bs-theme="dark"] .ef-combobox-dropdown li:hover {
+  background: rgba(37, 99, 235, 0.15);
+  color: #93C5FD;
+}
+
+/* --- UTILIDADES PROPIAS --- */
+.ef-icon-hero {
+  font-size: 3rem;
+}
+
+.ef-text-hint {
+  font-size: 0.85rem;
+  color: var(--ef-text-muted);
+}
+
+.ef-auth-card--sm {
+  max-width: 420px;
+}
+
+/* Footer profesional — usa las mismas variables que el header */
+.ef-footer {
+  background-color: var(--ef-navbar-bg);
+  border-top: 1px solid var(--ef-navbar-border);
+  margin-top: auto;
+}
+
+.ef-footer__body {
+  padding: 3rem 0 2rem;
+}
+
+.ef-footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.ef-footer__brand-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background-color: var(--ef-primary);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border-radius: 6px;
+  letter-spacing: -0.03em;
+  flex-shrink: 0;
+}
+
+.ef-footer__brand-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ef-text-primary);
+}
+
+.ef-footer__tagline {
+  font-size: 0.82rem;
+  color: var(--ef-text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.ef-footer__heading {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ef-text-muted);
+  margin-bottom: 0.85rem;
+}
+
+.ef-footer__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ef-footer__link {
+  font-size: 0.875rem;
+  color: var(--ef-text-secondary);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.ef-footer__link:hover {
+  color: var(--ef-primary);
+}
+
+.ef-footer__bottom {
+  border-top: 1px solid var(--ef-border);
+  padding: 1rem 0;
+  font-size: 0.78rem;
+  color: var(--ef-text-muted);
+}
+
+
+/* ==========================================================================
+   DETALLE DE FORMACIÓN
+   ========================================================================== */
+
+/* Cabecera visual de la formación */
+.ef-detail-hero {
+  background: var(--ef-surface);
+  border: 1px solid var(--ef-border);
+  border-radius: var(--ef-radius-lg);
+  padding: 2rem 2rem 1.75rem;
+  box-shadow: var(--ef-shadow-sm);
+}
+
+.ef-detail-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--ef-text-primary);
+  margin: 0 0 0.4rem;
+  letter-spacing: -0.02em;
+}
+
+.ef-detail-subtitle {
+  font-size: 1rem;
+  color: var(--ef-text-muted);
+  margin: 0;
+}
+
+/* Fila de atributos clave en la cabecera (modalidad, horario, duración…) */
+.ef-attrs-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0;
+}
+
+.ef-attr-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ef-text-secondary);
+  padding: 0 0.1rem;
+}
+
+.ef-attr-item i {
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.ef-attr-sep {
+  display: inline-block;
+  width: 1px;
+  height: 1rem;
+  background-color: var(--ef-border-strong);
+  margin: 0 0.65rem;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+/* Resumen de estrellas en la cabecera */
+.ef-stars-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+}
+
+/* Sidebar sticky: se ancla bajo la navbar */
+.ef-sidebar-sticky {
+  position: sticky;
+  top: 80px;
+}
+
+/* Headings de sección dentro de las cards */
+.ef-section-heading {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ef-text-primary);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+}
+
+/* Tarjeta de precio lateral */
+.ef-price-card {
+  border-radius: var(--ef-radius-lg);
+  box-shadow: var(--ef-shadow-sm);
+}
+
+/* Hover de btn-outline-primary en ambos modos — sutil, sin relleno sólido */
+#btnContactar {
+  --bs-btn-hover-bg:           rgba(37, 99, 235, 0.08);
+  --bs-btn-hover-border-color: #2563EB;
+  --bs-btn-hover-color:        #1D4ED8;
+  --bs-btn-active-bg:          rgba(37, 99, 235, 0.14);
+}
+
+[data-bs-theme="dark"] #btnContactar {
+  --bs-btn-hover-bg:           rgba(37, 99, 235, 0.18);
+  --bs-btn-hover-border-color: #3B82F6;
+  --bs-btn-hover-color:        #93C5FD;
+  --bs-btn-active-bg:          rgba(37, 99, 235, 0.28);
+}
+
+/* Botones de acción en sidebar de detalle-formacion */
+#btnVerPerfil {
+  --bs-btn-color:              #4F46E5;
+  --bs-btn-border-color:       #4F46E5;
+  --bs-btn-hover-color:        #fff;
+  --bs-btn-hover-bg:           #4F46E5;
+  --bs-btn-hover-border-color: #4338CA;
+  --bs-btn-active-bg:          #4338CA;
+  --bs-btn-active-border-color:#4338CA;
+}
+
+[data-bs-theme="dark"] #btnVerPerfil {
+  --bs-btn-color:              #818CF8;
+  --bs-btn-border-color:       #818CF8;
+  --bs-btn-hover-color:        #fff;
+  --bs-btn-hover-bg:           #6366F1;
+  --bs-btn-hover-border-color: #6366F1;
+}
+
+/* Botón CTA principal en detalle-formacion */
+#btnSolicitar {
+  background: linear-gradient(135deg, #1E3A8A 0%, #312E81 100%);
+  border: 1px solid rgba(0, 0, 0, 0.22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: background 0.2s ease;
+}
+#btnSolicitar:hover,
+#btnSolicitar:focus-visible {
+  background: linear-gradient(135deg, #1E40AF 0%, #3730A3 100%);
+}
+
+[data-bs-theme="dark"] #btnSolicitar {
+  background: linear-gradient(135deg, #1D4ED8 0%, #3730A3 100%);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+[data-bs-theme="dark"] #btnSolicitar:hover,
+[data-bs-theme="dark"] #btnSolicitar:focus-visible {
+  background: linear-gradient(135deg, #2563EB 0%, #4338CA 100%);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+/* Panel de estado de solicitud (inline, en el sidebar de detalle-formacion) */
+.ef-solicitud-estado {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--ef-radius-md);
+  border: 1.5px solid;
+}
+
+.ef-solicitud-estado__icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.ef-solicitud-estado__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.ef-solicitud-estado__label {
+  font-weight: 600;
+  font-size: 0.8125rem;
+  line-height: 1.3;
+}
+
+.ef-solicitud-estado__link {
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  flex-shrink: 0;
+}
+
+.ef-solicitud-estado__link:hover {
+  text-decoration: underline;
+}
+
+.ef-solicitud-estado--pendiente {
+  background-color: #FFFBEB;
+  border-color: var(--ef-warning);
+}
+.ef-solicitud-estado--pendiente .ef-solicitud-estado__icon,
+.ef-solicitud-estado--pendiente .ef-solicitud-estado__label {
+  color: #92400E;
+}
+.ef-solicitud-estado--pendiente .ef-solicitud-estado__link {
+  color: #B45309;
+}
+
+.ef-solicitud-estado--aceptada {
+  background-color: #F0FDF4;
+  border-color: #16A34A;
+}
+.ef-solicitud-estado--aceptada .ef-solicitud-estado__icon,
+.ef-solicitud-estado--aceptada .ef-solicitud-estado__label {
+  color: #065F46;
+}
+.ef-solicitud-estado--aceptada .ef-solicitud-estado__link {
+  color: #065F46;
+}
+
+.ef-solicitud-estado--rechazada {
+  background-color: #FFF1F2;
+  border-color: var(--ef-danger);
+}
+.ef-solicitud-estado--rechazada .ef-solicitud-estado__icon,
+.ef-solicitud-estado--rechazada .ef-solicitud-estado__label {
+  color: #9F1239;
+}
+.ef-solicitud-estado--rechazada .ef-solicitud-estado__link {
+  color: #BE123C;
+}
+
+.ef-solicitud-estado--cancelada {
+  background-color: #F8FAFC;
+  border-color: var(--ef-border);
+}
+.ef-solicitud-estado--cancelada .ef-solicitud-estado__icon,
+.ef-solicitud-estado--cancelada .ef-solicitud-estado__label {
+  color: var(--ef-text-secondary);
+}
+.ef-solicitud-estado--cancelada .ef-solicitud-estado__link {
+  color: var(--ef-text-secondary);
+}
+
+[data-bs-theme="dark"] .ef-solicitud-estado--pendiente  { background-color: rgba(245, 158, 11, 0.1); }
+[data-bs-theme="dark"] .ef-solicitud-estado--aceptada   { background-color: rgba(16, 185, 129, 0.1); }
+[data-bs-theme="dark"] .ef-solicitud-estado--rechazada  { background-color: rgba(239, 68, 68, 0.1);  }
+[data-bs-theme="dark"] .ef-solicitud-estado--cancelada  { background-color: rgba(100, 116, 139, 0.08); }
+
+.ef-solicitud-rechazada-aviso {
+  font-size: 0.75rem;
+  color: var(--ef-text-muted);
+  margin-top: -0.25rem;
+  margin-bottom: 0;
+  padding-left: 0.75rem;
+}
+
+.ef-solicitud-rechazada-aviso__link {
+  color: var(--ef-text-muted);
+  text-underline-offset: 2px;
+}
+
+.ef-solicitud-rechazada-aviso__link:hover {
+  color: var(--ef-text-secondary);
+}
+
+.ef-price-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ef-text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.ef-price-value {
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 0.75rem;
+}
+
+.ef-price-meta {
+  font-size: 0.85rem;
+  color: var(--ef-text-secondary);
+  margin-bottom: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Icono de verificado — sin fondo, sutil */
+.ef-verified-icon {
+  font-size: 1.2rem;
+  color: var(--ef-success);
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+
+/* Ajuste vertical en contexto align-items-center */
+.ef-verified-icon--center {
+  position: relative;
+  top: 2px;
+}
+
+/* Ajuste vertical en contexto align-items-baseline (perfil centro) */
+.ef-verified-icon--baseline {
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
+.ef-verified-icon:hover {
+  opacity: 1;
+}
+
+/* Badge de tipo de centro (Público / Privado / Concertado) */
+.ef-tipo-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--ef-radius-xs);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  flex-shrink: 0;
+  position: relative;
+  top: -2px;
+  left: 1px;
+  /* color por defecto (fallback) */
+  background-color: var(--ef-surface-alt);
+  color: var(--ef-text-secondary);
+  border: 1px solid var(--ef-border-strong);
+}
+
+/* Público — azul institucional */
+.ef-tipo-badge--publico {
+  background-color: var(--ef-primary-subtle);
+  color: var(--ef-primary);
+  border: 1px solid var(--ef-primary-light);
+}
+
+/* Privado — indigo/acento */
+.ef-tipo-badge--privado {
+  background-color: var(--ef-accent-subtle);
+  color: var(--ef-accent);
+  border: 1px solid rgba(79, 70, 229, 0.2);
+}
+
+/* Concertado — ámbar, mixto público+privado */
+.ef-tipo-badge--concertado {
+  background-color: var(--ef-warning-subtle);
+  color: #92400E;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+[data-bs-theme="dark"] .ef-tipo-badge--publico {
+  background-color: rgba(37, 99, 235, 0.18);
+  color: #93C5FD;
+  border-color: rgba(37, 99, 235, 0.3);
+}
+
+[data-bs-theme="dark"] .ef-tipo-badge--privado {
+  background-color: rgba(79, 70, 229, 0.18);
+  color: #A5B4FC;
+  border-color: rgba(79, 70, 229, 0.3);
+}
+
+[data-bs-theme="dark"] .ef-tipo-badge--concertado {
+  background-color: rgba(245, 158, 11, 0.18);
+  color: #FCD34D;
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+/* Panel de gestión: contenido de formación inactiva */
+.ef-formacion-inactiva {
+  opacity: 0.55;
+  transition: opacity var(--ef-transition);
+}
+.card:hover .ef-formacion-inactiva {
+  opacity: 0.8;
+}
+
+/* Panel de gestión: items de FAQ */
+.ef-faq-item {
+  background: var(--ef-surface);
+  border: 1px solid var(--ef-border);
+  border-radius: var(--ef-radius-md);
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.ef-faq-divider {
+  margin: 0.5rem 0 0.625rem;
+  border: 0;
+  border-top: 1px solid var(--ef-border);
+  opacity: 1;
+}
+
+/* ─── Modal de vista previa del perfil público ─────────────────────────────── */
+
+/* El modal-content en fullscreen ya es flex-column height:100% (Bootstrap).
+   Solo necesitamos que nuestros hijos participen correctamente en ese flex. */
+#modalPreviewPerfil .modal-content {
+  border-radius: 0;
+  border: 0;
+}
+
+/* Barra superior de preview: siempre oscura, marca visual inequívoca */
+.ef-preview-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 1.25rem;
+  height: 52px;
+  background: #0F172A;           /* Slate 900 — siempre oscuro, independiente del tema */
+  border-bottom: 3px solid var(--ef-primary);
+  flex-shrink: 0;
+}
+
+.ef-preview-bar__left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+/* Pill "VISTA PREVIA" */
+.ef-preview-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: var(--ef-primary);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--ef-radius-xs);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.pill-estado {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+[data-bs-theme="dark"] .pill-estado.btn-outline-success.active,
+[data-bs-theme="dark"] .pill-estado.btn-outline-success:hover {
+  --bs-btn-hover-bg:           rgba(22, 163, 74, 0.18);
+  --bs-btn-hover-border-color: var(--ef-success);
+  --bs-btn-hover-color:        #86efac;
+  --bs-btn-active-bg:          rgba(22, 163, 74, 0.18);
+  --bs-btn-active-border-color:var(--ef-success);
+  --bs-btn-active-color:       #86efac;
+}
+
+[data-bs-theme="dark"] .pill-estado.btn-outline-danger.active,
+[data-bs-theme="dark"] .pill-estado.btn-outline-danger:hover {
+  --bs-btn-hover-bg:           rgba(239, 68, 68, 0.18);
+  --bs-btn-hover-border-color: var(--ef-danger);
+  --bs-btn-hover-color:        #fca5a5;
+  --bs-btn-active-bg:          rgba(239, 68, 68, 0.18);
+  --bs-btn-active-border-color:var(--ef-danger);
+  --bs-btn-active-color:       #fca5a5;
+}
+
+.ef-input-icon {
+  background-color: var(--bs-body-bg);
+  border-color: var(--bs-border-color);
+  color: var(--ef-text-muted);
+}
+
+.ef-col-formacion { max-width: 250px; }
+
+@keyframes ef-highlight-fade {
+  0%   { background-color: var(--bs-warning-bg-subtle); }
+  100% { background-color: transparent; }
+}
+.ef-fila-resaltada {
+  animation: ef-highlight-fade 2.5s ease-out forwards;
+}
+
+.ef-thead th {
+  background-color: var(--ef-surface-alt);
+  color: var(--ef-text-secondary);
+  border-color: var(--ef-border);
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Descripción junto al pill */
+.ef-preview-label {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.45);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Botón cerrar */
+.ef-preview-close {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 1rem;
+  background: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--ef-radius-sm);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background var(--ef-transition), border-color var(--ef-transition), color var(--ef-transition);
+}
+
+.ef-preview-close:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.28);
+  color: #fff;
+}
+
+/* Cuerpo: ocupa todo el espacio restante del flex y contiene el iframe */
+.ef-preview-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.ef-preview-body iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Lista de datos de contacto del centro */
+.ef-contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.ef-contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  color: var(--ef-text-secondary);
+}
+
+.ef-contact-item i {
+  color: var(--ef-text-muted);
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.ef-contact-item a {
+  color: var(--ef-primary);
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.ef-contact-item a:hover {
+  text-decoration: underline;
+}
+
+/* Badge de puntuación global */
+.ef-rating-badge {
+  background: linear-gradient(135deg, var(--ef-warning) 0%, #F97316 100%);
+  color: white;
+  border-radius: var(--ef-radius-md);
+  padding: 0.3rem 0.75rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.15rem;
+}
+
+.ef-rating-num {
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.ef-rating-max {
+  font-size: 0.75rem;
+  opacity: 0.85;
+}
+
+/* Estrellas en tamaño grande (resumen) */
+.ef-stars-lg i {
+  font-size: 1.1rem;
+}
+
+/* Estrellas en tamaño pequeño (reseñas individuales) */
+.ef-stars-sm i {
+  font-size: 0.85rem;
+}
+
+/* Lista de reseñas */
+.ef-reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.ef-review-item {
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--ef-border);
+}
+
+.ef-review-item:first-child {
+  padding-top: 0;
+}
+
+.ef-review-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* Avatar circular con inicial del revisor */
+.ef-review-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--ef-primary-light) 0%, var(--ef-accent-subtle) 100%);
+  color: var(--ef-primary);
+  font-size: 0.875rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Modo oscuro: ajustes de contraste */
+[data-bs-theme="dark"] .ef-detail-hero {
+  background-color: var(--ef-surface);
+}
+
+
+[data-bs-theme="dark"] .ef-review-avatar {
+  background: linear-gradient(135deg, var(--ef-primary-subtle) 0%, var(--ef-accent-subtle) 100%);
+}
+
+/* Bloque CTA "inicia sesión para valorar" */
+.ef-review-cta {
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: var(--ef-radius);
+  background: var(--ef-primary-light);
+  border: 1px solid color-mix(in srgb, var(--ef-primary) 15%, transparent);
+  text-align: center;
+}
+
+.ef-review-cta__stars {
+  font-size: 1.35rem;
+  color: #f5a623;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.6rem;
+  opacity: 0.75;
+}
+
+.ef-review-cta__title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+  color: var(--ef-text);
+}
+
+.ef-review-cta__sub {
+  font-size: 0.82rem;
+  color: var(--ef-muted);
+  margin-bottom: 1rem;
+}
+
+[data-bs-theme="dark"] .ef-review-cta {
+  background: var(--ef-primary-subtle);
+  border-color: color-mix(in srgb, var(--ef-primary) 25%, transparent);
+}
+
+/* Formulario de nueva valoración */
+.ef-review-form {
+  padding: 1.25rem 0 1rem;
+  border-bottom: 1px solid var(--ef-border);
+  margin-bottom: 0.25rem;
+}
+
+.ef-review-form:last-child {
+  border-bottom: none;
+}
+
+/* Selector de estrellas interactivo */
+.ef-star-picker {
+  display: inline-flex;
+  flex-direction: row-reverse;
+  gap: 0.2rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.ef-star-picker input[type="radio"] {
+  display: none;
+}
+
+.ef-star-picker label {
+  font-size: 1.75rem;
+  color: var(--ef-border);
+  cursor: pointer;
+  transition: color 0.1s ease, transform 0.1s ease;
+  line-height: 1;
+}
+
+/* Rellena desde la estrella seleccionada hacia adelante (gracias a row-reverse) */
+.ef-star-picker input[type="radio"]:checked ~ label,
+.ef-star-picker label:hover,
+.ef-star-picker label:hover ~ label {
+  color: #f5a623;
+}
+
+.ef-star-picker label:hover {
+  transform: scale(1.15);
+}
+
+/* Badge "Tu valoración" */
+.ef-badge-propia {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 0.2em 0.55em;
+  border-radius: 999px;
+  background: var(--ef-primary-light);
+  color: var(--ef-primary);
+  vertical-align: middle;
+}
+
+[data-bs-theme="dark"] .ef-badge-propia {
+  background: rgba(29, 78, 216, 0.18);
+  color: #93C5FD;
+}
+
+/* ==========================================================================
+   CHAT
+   ========================================================================== */
+.chat-bubble { line-height: 1.4; word-break: break-word; }
+.chat-bubble-mio { background-color: var(--ef-primary); color: #fff; border-radius: 18px 18px 4px 18px !important; }
+.chat-bubble-otro { background-color: var(--ef-surface); border: 1px solid var(--ef-border); border-radius: 18px 18px 18px 4px !important; }
+
+.ef-link-centro { color: var(--ef-primary); font-size: .85rem; }
+.ef-link-centro:hover { text-decoration: underline !important; }
+
+.ef-chip-link { font-size: .75rem; }
+.ef-chip-link:hover { text-decoration: underline !important; }
+
+/* Panel derecho del chat: flex-column para mensajes arriba, formulario abajo */
+#panelMensajes {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  position: relative;
+}
+#cabeceraConversacion { flex-shrink: 0; }
+#contenedorMensajes   { flex: 1 1 0; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; }
+
+[data-bs-theme="dark"] #chatCard {
+  background-color: var(--bs-body-bg);
+}
+[data-bs-theme="dark"] #contenedorMensajes .bg-light {
+  background-color: rgba(255, 255, 255, 0.07) !important;
+  color: var(--bs-body-color);
+}
+[data-bs-theme="dark"] #cabeceraFormaciones .badge {
+  background-color: rgba(255, 255, 255, 0.07) !important;
+  border-color: var(--bs-border-color) !important;
+  color: var(--bs-body-color) !important;
+}
+[data-bs-theme="dark"] #cabeceraFormaciones .ef-chip-link {
+  color: var(--bs-body-color) !important;
+}
+#contenedorMensajes::before { content: ''; flex: 1 1 0; }
+#formularioMensaje    { flex-shrink: 0; }
+.ef-chip-remove:hover { opacity: 1 !important; color: var(--ef-danger); }
+
+/* ==========================================================================
+   CONFIRM MODAL (efConfirm)
+   ========================================================================== */
+.ef-confirm-dialog {
+  max-width: 420px;
+}
+
+.ef-confirm-content {
+  border: none;
+  border-radius: var(--ef-radius-lg);
+  box-shadow: var(--ef-shadow-lg);
+  overflow: hidden;
+}
+
+.ef-confirm-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 2rem 1rem;
+  gap: 0.75rem;
+}
+
+.ef-confirm-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.375rem;
+  flex-shrink: 0;
+}
+
+.ef-confirm-icon--danger  { background-color: var(--ef-danger-subtle);  color: var(--ef-danger);  }
+.ef-confirm-icon--warning { background-color: var(--ef-warning-subtle); color: var(--ef-warning); }
+.ef-confirm-icon--primary { background-color: var(--ef-primary-subtle); color: var(--ef-primary); }
+
+.ef-confirm-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ef-text-primary);
+}
+
+.ef-confirm-message {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--ef-text-secondary);
+  line-height: 1.5;
+}
+
+.ef-confirm-footer {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem 1.5rem;
+  border-top: none;
+  background: transparent;
+}
+
+.ef-confirm-footer .btn {
+  min-width: 120px;
+  border-radius: var(--ef-radius);
+  font-weight: 500;
+}
+
+/* Botón secundario fantasma coherente con el design system */
+.btn-ghost-secondary {
+  background: transparent;
+  border: 1px solid var(--ef-border-strong);
+  color: var(--ef-text-secondary);
+}
+.btn-ghost-secondary:hover {
+  background: var(--ef-surface-alt);
+  color: var(--ef-text-primary);
+  border-color: var(--ef-border-strong);
+}
+
+
+/* ===== Panel de notificaciones ===== */
+
+.notif-list {
+  background: var(--bs-card-bg);
+  border: 1px solid var(--ef-border);
+  border-radius: var(--ef-radius-md);
+  overflow: hidden;
+  box-shadow: var(--ef-shadow-sm);
+}
+
+.notif-grupo-header {
+  padding: 0.6rem 1rem 0.4rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ef-text-muted);
+  background: var(--ef-bg);
+  border-bottom: 1px solid var(--ef-border);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.notif-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--ef-border);
+  background: var(--bs-card-bg);
+  transition: background var(--ef-transition);
+  position: relative;
+}
+
+.notif-item:last-child {
+  border-bottom: none;
+}
+
+.notif-clickable {
+  cursor: pointer;
+}
+
+.notif-clickable:hover {
+  background: var(--ef-surface-alt);
+}
+
+.notif-unread {
+  background: var(--ef-primary-subtle);
+}
+
+[data-bs-theme="dark"] .notif-unread {
+  background: var(--ef-primary-subtle);
+}
+
+.notif-unread.notif-clickable:hover {
+  background: var(--ef-primary-light);
+}
+
+[data-bs-theme="dark"] .notif-unread.notif-clickable:hover {
+  background: var(--ef-accent-subtle);
+}
+
+.notif-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ef-primary);
+  flex-shrink: 0;
+  margin-top: 0.5rem;
+  align-self: flex-start;
+}
+
+.notif-dot-placeholder {
+  width: 8px;
+  flex-shrink: 0;
+}
+
+.notif-icon-wrap {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.notif-icon-success {
+  background: rgba(16, 185, 129, 0.14);
+  color: var(--ef-success);
+}
+
+.notif-icon-danger {
+  background: rgba(239, 68, 68, 0.14);
+  color: var(--ef-danger);
+}
+
+.notif-icon-primary {
+  background: rgba(37, 99, 235, 0.14);
+  color: var(--ef-primary);
+}
+
+.notif-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.notif-title {
+  font-size: 0.875rem;
+  line-height: 1.3;
+  color: var(--ef-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.notif-msg {
+  font-size: 0.8rem;
+  line-height: 1.35;
+  color: var(--ef-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 0.15rem;
+}
+
+.notif-time {
+  font-size: 0.7rem;
+  color: var(--ef-text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.notif-badge {
+  font-size: 0.65rem;
+  min-width: 1.25rem;
+}
+
+/* Icono del Asistente IA en navbar */
+.ef-nav-ia-icon {
+  color: var(--ef-accent);
+  font-size: 1.05em;
+}
+
+/* Texto "Asistente IA" con fade gris → indigo */
+.ef-nav-ia-text {
+  font-weight: 500;
+  background: linear-gradient(180deg, var(--ef-accent) 0%, #475569 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[data-bs-theme="dark"] .ef-nav-ia-text {
+  background: linear-gradient(180deg, var(--ef-accent) 0%, #94A3B8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Link activo en la navbar */
+.ef-nav-active {
+  color: var(--ef-primary) !important;
+  font-weight: 600;
+  background: radial-gradient(ellipse at center, rgba(79, 70, 229, 0.13) 0%, transparent 70%);
+  border-radius: 0;
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+}
+
+.ef-btn-icon.ef-nav-active {
+  border-radius: 8px;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+[data-bs-theme="dark"] .ef-nav-active {
+  color: #60A5FA !important;
+  background: radial-gradient(ellipse at center, rgba(79, 70, 229, 0.22) 0%, transparent 70%);
+}
+
+/* Paginación de formaciones en perfil de centro */
+.ef-pagination {
+  user-select: none;
+}
+
+.ef-page-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 1px solid var(--ef-border);
+  background: transparent;
+  color: var(--ef-text-secondary);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+.ef-page-arrow:hover:not(:disabled) {
+  background: var(--ef-primary-light);
+  border-color: var(--ef-primary);
+  color: var(--ef-primary);
+}
+.ef-page-arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.ef-page-dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ef-text-secondary);
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.ef-page-dot:hover:not(:disabled) {
+  background: var(--ef-primary-light);
+  color: var(--ef-primary);
+}
+.ef-page-dot--active {
+  background: var(--ef-primary);
+  color: #fff;
+  border-color: var(--ef-primary);
+  cursor: default;
+}
+
+[data-bs-theme="dark"] .ef-page-arrow {
+  border-color: var(--ef-border);
+  color: var(--ef-text-secondary);
+}
+[data-bs-theme="dark"] .ef-page-arrow:hover:not(:disabled) {
+  background: rgba(37, 99, 235, 0.15);
+  border-color: #60A5FA;
+  color: #60A5FA;
+}
+[data-bs-theme="dark"] .ef-page-dot:hover:not(:disabled) {
+  background: rgba(37, 99, 235, 0.15);
+  color: #60A5FA;
+}
+[data-bs-theme="dark"] .ef-page-dot--active {
+  background: #2563EB;
+  border-color: #2563EB;
+  color: #fff;
+}
+

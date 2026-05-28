@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Crear cuenta - EncuentraFormación</title>
+    <script src="/js/comun/theme.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" integrity="sha384-XGjxtQfXaH2tnPFa9x+ruJTuLE3Aa6LhHSWRr1XeTyhezb4abCG4ccI5AkVDxqC+" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/components.css">
+</head>
+
+<body class="ef-auth-body">
+
+    <div class="ef-theme-float">
+        <button id="themeToggle" class="ef-btn-icon" title="Cambiar a modo oscuro">
+            <i id="themeIcon" class="bi bi-moon-fill"></i>
+        </button>
+    </div>
+
+    <div class="ef-auth-wrapper">
+        <div class="ef-auth-card text-center">
+
+            <div class="ef-auth-header">
+                <div class="ef-logo-mark">EF</div>
+                <h1 class="ef-auth-title">Crear cuenta</h1>
+                <p class="ef-auth-tagline">¿Qué tipo de cuenta quieres crear?</p>
+            </div>
+
+            <div class="d-grid gap-3">
+                <a href="/vistas/auth/registro-estudiante.html" class="btn btn-primary btn-lg">
+                    <i class="bi bi-mortarboard me-2"></i>Estudiante
+                </a>
+                <a href="/vistas/auth/registro-gestor.html" class="btn btn-outline-primary btn-lg">
+                    <i class="bi bi-building me-2"></i>Quiero gestionar mi centro
+                </a>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="/" class="text-decoration-none ef-text-hint">
+                    &larr; Volver al inicio
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="/js/comun/logout.js"></script>
+</body>
+
+</html>
